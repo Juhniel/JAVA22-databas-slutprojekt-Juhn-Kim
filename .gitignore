@@ -36,3 +36,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/.idea/dataSources/c18312ad-081d-4b8b-b89e-f073ff9ee113.xml
+/.idea/dataSources.local.xml
+/.idea/dataSources.xml
+/.idea/dataSources/c18312ad-081d-4b8b-b89e-f073ff9ee113/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/.idea/dataSources/c18312ad-081d-4b8b-b89e-f073ff9ee113/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/.idea/dataSources/c18312ad-081d-4b8b-b89e-f073ff9ee113/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/.idea/dataSources/c18312ad-081d-4b8b-b89e-f073ff9ee113/storage_v2/_src_/schema/sys.zb4BAA.meta

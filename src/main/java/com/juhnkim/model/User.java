@@ -13,6 +13,18 @@ public class User {
     private String address;
     private String password;
 
+    public User(int id, Timestamp created, String ssn, String name, String email, boolean online, String phone, String address, String password) {
+        this.id = id;
+        this.created = created;
+        this.ssn = ssn;
+        this.name = name;
+        this.email = email;
+        this.online = online;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }
