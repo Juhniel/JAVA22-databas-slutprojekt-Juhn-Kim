@@ -60,10 +60,10 @@ public class DatabaseInitializer {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "amount DECIMAL(19, 2), " +
-                    "sender_account_id INT, " +
-                    "receiver_account_id INT, " +
                     "transaction_type VARCHAR(20), " +
                     "description VARCHAR(255), " +
+                    "sender_account_id INT, " +
+                    "receiver_account_id INT, " +
                     "FOREIGN KEY (sender_account_id) REFERENCES account(id), " +
                     "FOREIGN KEY (receiver_account_id) REFERENCES account(id))";
 

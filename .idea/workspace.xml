@@ -4,22 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Set up models">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/TransactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoggedInMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoginMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/hey" afterDir="false" />
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Repository and menu classes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/LoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleColors/ConsoleColors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/PasswordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoggedInMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoggedInMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +60,29 @@
       <recent name="C:\Users\juhns\IntelliJ Projects\JAVA22-databas-slutprojekt-Juhn-Kim\src\main\resources" />
       <recent name="C:\Users\juhns\IntelliJ Projects\JAVA22-databas-slutprojekt-Juhn-Kim\src\main\java\com\juhnkim\database" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.juhnkim.view.consoleColors" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.juhnkim.Main" />
+      <module name="JAVA22-databas-slutprojekt-Juhn-Kim" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.juhnkim.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -76,7 +94,7 @@
       <updated>1685000283023</updated>
       <workItem from="1685000284132" duration="5189000" />
       <workItem from="1685005506952" duration="2445000" />
-      <workItem from="1685012990089" duration="445000" />
+      <workItem from="1685012990089" duration="8825000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -90,7 +108,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1685007530826</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="Repository and menu classes">
+      <created>1685013658065</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1685013658065</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +123,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creating tables for database SwoshDB" />
     <MESSAGE value="Set up models" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set up models" />
+    <MESSAGE value="Repository and menu classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repository and menu classes" />
   </component>
 </project>

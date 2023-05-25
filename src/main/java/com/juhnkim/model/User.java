@@ -13,9 +13,8 @@ public class User {
     private String address;
     private String password;
 
-    public User(int id, Timestamp created, String ssn, String name, String email, boolean online, String phone, String address, String password) {
+    public User(int id, String ssn, String name, String email, boolean online, String phone, String address, String password) {
         this.id = id;
-        this.created = created;
         this.ssn = ssn;
         this.name = name;
         this.email = email;
@@ -37,9 +36,6 @@ public class User {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
 
     public String getSsn() {
         return ssn;
