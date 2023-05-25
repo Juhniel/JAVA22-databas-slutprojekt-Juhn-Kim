@@ -2,7 +2,6 @@ package com.juhnkim.database;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,7 +32,7 @@ public class DatabaseConnection {
         DatabaseConnection instance;
         try {
             Properties properties = new Properties();
-            InputStream config = DatabaseConnection.class.getClassLoader().getResourceAsStream("swoshDB.txt");
+            InputStream config = DatabaseConnection.class.getClassLoader().getResourceAsStream("swoshDBConfig.txt");
             properties.load(config);
             String url = properties.getProperty("url");
             int port = Integer.parseInt(properties.getProperty("port"));

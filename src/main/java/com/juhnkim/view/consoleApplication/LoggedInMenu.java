@@ -23,10 +23,12 @@ public class LoggedInMenu {
         do {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
-            System.out.println("                Choose one of the menu options:");
-            System.out.println("                        1. My account");
-            System.out.println("                        2. Posts");
-            System.out.println("                        0. Log out");
+            System.out.println("                Choose one of the menu options:                     ");
+            System.out.println("                        1. Transactions                             ");
+            System.out.println("                        2. Bank account                             ");
+            System.out.println("                        3. User account                             ");
+//            System.out.println("                        4.                                          ");
+            System.out.println("                        0. Log out                                  ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             userOption = Integer.parseInt(scan.nextLine());
@@ -35,7 +37,7 @@ public class LoggedInMenu {
         System.out.println("Logging out...");
     }
 
-    //  LOGGED IN MENU
+
     public void processLoggedInOption(int userOption) {
         switch (userOption) {
             case 1:

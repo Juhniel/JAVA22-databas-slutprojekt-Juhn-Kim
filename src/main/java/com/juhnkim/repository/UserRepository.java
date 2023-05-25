@@ -5,6 +5,7 @@ import com.juhnkim.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRepository {
@@ -33,5 +34,60 @@ public class UserRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
+    }
+
+    public User getUserById(int id){
+        String query = "SELECT * FROM user WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setLong(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String ssn = resultSet.getString("ssn");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                boolean online = resultSet.getBoolean("online");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String password = resultSet.getString("password");
+                User user = new User(name, ssn, email, online, phone, address, password);
+                user.setId(id);
+                return user;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+        return null;
+    }
+
+    public User getUserBySsn(String ssn){
+        String query = "SELECT * FROM user WHERE ssn = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, ssn);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                boolean online = resultSet.getBoolean("online");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String password = resultSet.getString("password");
+                User user = new User(name, ssn, email, online, phone, address, password);
+                user.setSsn(ssn);
+                return user;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+        return null;
     }
 }
