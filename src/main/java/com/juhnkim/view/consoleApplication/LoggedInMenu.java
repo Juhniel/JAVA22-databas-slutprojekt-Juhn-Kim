@@ -15,7 +15,10 @@ public class LoggedInMenu {
     private final LoginService loginService;
     private final Scanner scan;
 
-    public LoggedInMenu(LoginService loginService, Scanner scan) {
+    public LoggedInMenu(TransactionMenu transactionMenu, AccountMenu accountMenu, UserMenu userMenu, LoginService loginService, Scanner scan) {
+        this.transactionMenu = transactionMenu;
+        this.accountMenu = accountMenu;
+        this.userMenu = userMenu;
         this.loginService = loginService;
         this.scan = scan;
     }
@@ -36,9 +39,9 @@ public class LoggedInMenu {
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             userOption = Integer.parseInt(scan.nextLine());
-            handleLoggedInMenu(userOption);
+            handleLoggedInMenu(userOption, loggedInUser);
         } while (userOption != 0 && loginService.isUserLogged());
-        System.out.println("Logging out...");
+        System.out.println("                        Logging out..                             ");
     }
 
 

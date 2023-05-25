@@ -109,7 +109,7 @@ public class UserMenu {
                 System.out.println("                Your account has been deleted!                      ");
             }else{
                 System.out.println("--------------------------------------------------------------------");
-                System.out.println(ConsoleColors.BLUE);
+                System.out.println(ConsoleColors.RED);
                 System.out.println("                Something went wrong.. Please try again later       ");
             }
             System.out.println(ConsoleColors.RESET);

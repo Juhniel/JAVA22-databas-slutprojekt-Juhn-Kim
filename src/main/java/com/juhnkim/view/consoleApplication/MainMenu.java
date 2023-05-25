@@ -90,9 +90,17 @@ public class MainMenu {
 
         boolean isUserAdded = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
         if (isUserAdded) {
-            System.out.println("User added!");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.GREEN);
+            System.out.println("                        User added!                                 ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         } else {
-            System.out.println("Failed to add user.");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            System.out.println("                        Failed to add user - Try again later        ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         }
     }
 }
