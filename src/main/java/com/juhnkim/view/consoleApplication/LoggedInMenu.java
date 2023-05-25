@@ -1,5 +1,6 @@
 package com.juhnkim.view.consoleApplication;
 
+import com.juhnkim.model.Account;
 import com.juhnkim.model.User;
 import com.juhnkim.service.LoginService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
@@ -7,6 +8,10 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 import java.util.Scanner;
 
 public class LoggedInMenu {
+
+    private final TransactionMenu transactionMenu;
+    private final AccountMenu accountMenu;
+    private final UserMenu userMenu;
     private final LoginService loginService;
     private final Scanner scan;
 
@@ -37,14 +42,16 @@ public class LoggedInMenu {
     }
 
 
-    public void handleLoggedInMenu(int userOption) {
+    public void handleLoggedInMenu(int userOption, User loggedInUser) {
         switch (userOption) {
             case 1:
-//                userMenu.displayUserMenu(loggedInUser);
+                transactionMenu.displayTransactionMenu(loggedInUser);
                 break;
             case 2:
-//                postMenu.displayPostMenu(loggedInUser);
+                accountMenu.displayAccountMenu(loggedInUser);
                 break;
+            case 3:
+                userMenu.displayUserMenu(loggedInUser);
             case 0:
                 break;
             default:

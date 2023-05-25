@@ -103,9 +103,21 @@ public class UserRepository {
         }
     }
 
-    public void deleteUser() {
+    public boolean deleteUser(User user) {
+        String query = "DELETE FROM user WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, user.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            return rowsAffected > 0;
+
+        }catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
 
     }
-
-
 }
