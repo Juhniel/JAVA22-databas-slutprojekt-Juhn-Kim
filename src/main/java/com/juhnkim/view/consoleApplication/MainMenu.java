@@ -19,14 +19,6 @@ public class MainMenu {
         this.scan = scan;
     }
 
-    String ssn;
-    String name;
-    String email;
-    String phone;
-    String address;
-    String password;
-
-
     public void displayMainMenu() {
         int userOption;
         do {
@@ -34,24 +26,24 @@ public class MainMenu {
             System.out.print(ConsoleColors.BLUE);
             System.out.println("                            ** WELCOME! **                          ");
             System.out.println("                    What would you like to do today?                ");
-            System.out.println("                        1. Create new account                       ");
+            System.out.println("                        1. Register new account                     ");
             System.out.println("                        2. Login                                    ");
             System.out.println("                        0. Exit                                     ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             userOption = scan.nextInt();
             scan.nextLine();
-            processMainMenuOption(userOption);
+            handleMainMenu(userOption);
         } while (userOption != 0);
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                    Exiting application...                          ");
         System.out.println("--------------------------------------------------------------------");
     }
 
-    public void processMainMenuOption(int userOption) {
+    public void handleMainMenu(int userOption) {
         switch (userOption) {
             case 1:
-                createNewUser();
+                createNewUserAccount();
                 break;
             case 2:
                 loginMenu.displayLoginMenu();
@@ -68,36 +60,40 @@ public class MainMenu {
     }
 
 
-    public void createNewUser() {
+    public void createNewUserAccount() {
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                        Enter name: ");
         System.out.println("--------------------------------------------------------------------");
-        name = scan.nextLine();
+        String name = scan.nextLine();
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter your social security number: ");
+        System.out.println("                  Enter your social security number:                ");
         System.out.println("--------------------------------------------------------------------");
-        ssn = scan.nextLine();
+        String ssn = scan.nextLine();
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                        Enter email: ");
         System.out.println("--------------------------------------------------------------------");
-        email = scan.nextLine();
+        String email = scan.nextLine();
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                        Enter password: ");
         System.out.println("--------------------------------------------------------------------");
-        password = scan.nextLine();
+        String password = scan.nextLine();
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                        Enter phone: ");
         System.out.println("--------------------------------------------------------------------");
-        phone = scan.nextLine();
+        String phone = scan.nextLine();
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                        Enter address: ");
         System.out.println("--------------------------------------------------------------------");
-        address = scan.nextLine();
+        String address = scan.nextLine();
 
-        String hashedPassword = userService.hashPassword(password);
+        String hashedPassword = userService.validateAndHashPassword(password);
 
-        userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
-
+        boolean isUserAdded = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
+        if (isUserAdded) {
+            System.out.println("User added!");
+        } else {
+            System.out.println("Failed to add user.");
+        }
     }
 }
 

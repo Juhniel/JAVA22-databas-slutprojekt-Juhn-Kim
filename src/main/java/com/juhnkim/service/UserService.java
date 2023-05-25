@@ -13,8 +13,12 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
-    public void addUser(User user) {
-        userRepository.addUser(user);
+    public boolean addUser(User user) {
+        return userRepository.addUser(user);
+    }
+
+    public boolean updateUser(User user) {
+        return userRepository.updateUser(user);
     }
 
     public User getUserById(int id) {
@@ -25,8 +29,18 @@ public class UserService {
         return userRepository.getUserBySsn(ssn);
     }
 
-    // Ändra statements
-    public String hashPassword(String password) {
-        return passwordService.hashPassword(password);
+
+    public String validateAndHashPassword(String password) {
+        if (validatePassword(password)) {
+            return passwordService.hashPassword(password);
+        } else {
+            // you can throw an exception here or return a special value to indicate that the password was invalid
+            throw new IllegalArgumentException("Invalid password");
+        }
+    }
+
+    private boolean validatePassword(String password) {
+        // Validate the password according to your rules. Here is a simple example
+        return password != null && password.length() >= 8;
     }
 }

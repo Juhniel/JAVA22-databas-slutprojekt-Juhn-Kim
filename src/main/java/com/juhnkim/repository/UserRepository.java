@@ -3,10 +3,7 @@ package com.juhnkim.repository;
 import com.juhnkim.database.DatabaseConnection;
 import com.juhnkim.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserRepository {
 
@@ -18,22 +15,6 @@ public class UserRepository {
         preparedStatement.setString(5, user.getPhone());
         preparedStatement.setString(6, user.getAddress());
         preparedStatement.setString(7, user.getPassword());
-    }
-
-    public void addUser(User user) {
-        String query = "INSERT INTO user(ssn, name, email, online, phone, address, password) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            setPreparedStatementValues(preparedStatement, user);
-            preparedStatement.executeUpdate();
-            System.out.println("User added!");
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Database operation failed", e);
-        }
     }
 
     public User getUserById(int id){
@@ -90,4 +71,41 @@ public class UserRepository {
         }
         return null;
     }
+
+    public boolean addUser(User user) {
+        String query = "INSERT INTO user(ssn, name, email, online, phone, address, password) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            setPreparedStatementValues(preparedStatement, user);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+    }
+
+    public boolean updateUser(User user) {
+        String query = "UPDATE user SET name = ?, email = ?, phone = ?, address = ?, password = ? WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            setPreparedStatementValues(preparedStatement, user);
+            preparedStatement.setInt(8, user.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+    }
+
+    public void deleteUser() {
+
+    }
+
+
 }

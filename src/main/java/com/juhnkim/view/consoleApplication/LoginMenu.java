@@ -40,7 +40,7 @@ public class LoginMenu {
                 System.out.println("                        Login successful!");
                 System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
-                loggedInMenu.loggedInMenu(loggedInUser);
+                loggedInMenu.displayLoggedInMenu(loggedInUser);
             } else {
                 loginAttempts++;
                 System.out.println("--------------------------------------------------------------------");

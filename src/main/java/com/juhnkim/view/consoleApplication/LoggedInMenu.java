@@ -15,7 +15,7 @@ public class LoggedInMenu {
         this.scan = scan;
     }
 
-    public void loggedInMenu(User loggedInUser) {
+    public void displayLoggedInMenu(User loggedInUser) {
         if(loggedInUser == null) {
             return;
         }
@@ -27,18 +27,17 @@ public class LoggedInMenu {
             System.out.println("                        1. Transactions                             ");
             System.out.println("                        2. Bank account                             ");
             System.out.println("                        3. User account                             ");
-//            System.out.println("                        4.                                          ");
             System.out.println("                        0. Log out                                  ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             userOption = Integer.parseInt(scan.nextLine());
-            processLoggedInOption(userOption);
+            handleLoggedInMenu(userOption);
         } while (userOption != 0 && loginService.isUserLogged());
         System.out.println("Logging out...");
     }
 
 
-    public void processLoggedInOption(int userOption) {
+    public void handleLoggedInMenu(int userOption) {
         switch (userOption) {
             case 1:
 //                userMenu.displayUserMenu(loggedInUser);
