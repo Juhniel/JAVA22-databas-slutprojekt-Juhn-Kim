@@ -1,11 +1,12 @@
 package com.juhnkim.view.consoleApplication;
 
 import com.juhnkim.model.User;
+import com.juhnkim.service.AccountService;
 
 import java.util.Scanner;
 
 public class AccountMenu {
-
+    private final AccountService accountService;
     private final Scanner scan;
 
 
@@ -25,13 +26,13 @@ public class AccountMenu {
     public void handleAccountMenu(int userOption, User loggedInUser) {
         switch (userOption) {
             case 1:
-
+                accountService.checkBalance();
                 break;
             case 2:
-
+                accountService.CreateBankAccount();
                 break;
             case 3:
-
+                accountService.deleteBankAccount();
                 break;
             case 6:
                 break;
