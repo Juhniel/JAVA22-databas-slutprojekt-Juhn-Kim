@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/CreateDatabaseMySQL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/swoshDB.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" afterDir="false" />
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Creating tables for database SwoshDB">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/CreateDatabaseMySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/CreateDatabaseMySQL.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,23 +29,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\juhns\IntelliJ Projects\JAVA22-databas-slutprojekt-Juhn-Kim\src\main\resources" />
@@ -65,10 +61,22 @@
       <option name="presentableId" value="Default" />
       <updated>1685000283023</updated>
       <workItem from="1685000284132" duration="5189000" />
+      <workItem from="1685005506952" duration="923000" />
     </task>
+    <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
+      <created>1685005788371</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1685005788371</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Creating tables for database SwoshDB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating tables for database SwoshDB" />
   </component>
 </project>

@@ -1,11 +1,11 @@
-package com.juhnkim.repository;
+package com.juhnkim.database;
 
 import com.juhnkim.database.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class CreateDatabaseMySQL {
+public class DatabaseInitializer {
 
     public void createUserTable() {
         try(Connection connection = DatabaseConnection.getConnection();
@@ -39,7 +39,7 @@ public class CreateDatabaseMySQL {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "account_name VARCHAR(100), " +
                     "account_number VARCHAR(20), " +
-                    "balance int," +
+                    "balance DECIMAL(19, 2)," +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "user_id INT, " +
                     "FOREIGN KEY (user_id) REFERENCES user(id))";
@@ -59,7 +59,7 @@ public class CreateDatabaseMySQL {
             String query = "CREATE TABLE IF NOT EXISTS transaction (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                    "amount DECIMAL(19, 4), " +
+                    "amount DECIMAL(19, 2), " +
                     "sender_account_id INT, " +
                     "receiver_account_id INT, " +
                     "transaction_type VARCHAR(20), " +

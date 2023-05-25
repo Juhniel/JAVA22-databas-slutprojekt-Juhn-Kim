@@ -1,10 +1,10 @@
 package com.juhnkim;
 
-import com.juhnkim.repository.CreateDatabaseMySQL;
+import com.juhnkim.database.DatabaseInitializer;
 
 public class Main {
     public static void main(String[] args) {
-        CreateDatabaseMySQL c = new CreateDatabaseMySQL();
+        DatabaseInitializer c = new DatabaseInitializer();
         c.createUserTable();
         c.createAccountTable();
         c.createTransactionTable();
