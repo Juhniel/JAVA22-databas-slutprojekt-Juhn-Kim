@@ -7,10 +7,10 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 import java.util.Scanner;
 
 public class LoginMenu {
-    private LoginService loginService;
+    private final LoginService loginService;
     private User loggedInUser;
-    private Scanner scan;
-    private LoggedInMenu loggedInMenu;
+    private final Scanner scan;
+    private final LoggedInMenu loggedInMenu;
 
     public LoginMenu(LoginService loginService, Scanner scan, LoggedInMenu loggedInMenu) {
         this.loginService = loginService;

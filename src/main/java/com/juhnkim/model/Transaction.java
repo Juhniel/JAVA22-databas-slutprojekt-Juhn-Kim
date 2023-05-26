@@ -12,6 +12,14 @@ public class Transaction {
     private int senderAccountId;
     private int receiverAccountId;
 
+    public Transaction(BigDecimal amount, String transactionType, String description, int senderAccountId, int receiverAccountId) {
+        this.amount = amount;
+        this.transactionType = transactionType;
+        this.description = description;
+        this.senderAccountId = senderAccountId;
+        this.receiverAccountId = receiverAccountId;
+    }
+
     public Transaction(int id, Timestamp created, BigDecimal amount, String transactionType, String description, int senderAccountId, int receiverAccountId) {
         this.id = id;
         this.created = created;

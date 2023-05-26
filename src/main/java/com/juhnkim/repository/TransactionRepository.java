@@ -4,9 +4,10 @@ import com.juhnkim.database.DatabaseConnection;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionRepository {
 
@@ -18,22 +19,22 @@ public class TransactionRepository {
         preparedStatement.setInt(5, transaction.getReceiverAccountId());
     }
 
-    public void addBalanceToAccount(Transaction transaction){
-        String query = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
+//    public void addBalanceToAccount(Transaction transaction){
+//        String query = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
+//
+//        try (Connection connection = DatabaseConnection.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//
+//            preparedStatement.setBigDecimal(1, transaction.getAmount());
+//            preparedStatement.setInt(2, transaction.getId());
+//            preparedStatement.executeUpdate();
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Database operation failed", e);
+//        }
+//    }
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setBigDecimal(1, transaction.getAmount());
-            preparedStatement.setInt(2, transaction.getId());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Database operation failed", e);
-        }
-    }
-
-    public void transferFunds(Transaction transaction) {
+    public boolean transferFunds(Transaction transaction) {
         String query1 = "UPDATE account SET balance = balance - ? WHERE account_number = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
 
@@ -52,11 +53,13 @@ public class TransactionRepository {
             // add amount to receiver's account
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
             preparedStatement2.setInt(2, transaction.getReceiverAccountId());
-            preparedStatement2.executeUpdate();
+            int rowsAffected = preparedStatement2.executeUpdate();
+
 
             // end transaction
             connection.commit();
             connection.setAutoCommit(true);
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
@@ -64,13 +67,55 @@ public class TransactionRepository {
     }
 
 
-    public void showAllTransactions() {
+    public List<Transaction> showAllTransactions() {
+        String query = "SELECT * FROM transaction";
 
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Transaction> transactionList = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Timestamp created = resultSet.getTimestamp("created");
+                BigDecimal amount = resultSet.getBigDecimal("amount");
+                String transactionType = resultSet.getString("transaction_type");
+                String description = resultSet.getString("description");
+                int senderAccountId = resultSet.getInt("sender_account_id");
+                int receiverAccountId = resultSet.getInt("receiver_account_id");
+                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+            }
+            return transactionList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
     }
 
-    public void showTransactionsByDate() {
 
+    public List<Transaction> showTransactionsByDate() {
+        String query = "SELECT * FROM transaction ORDER BY created DESC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Transaction> transactionList = new ArrayList<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Timestamp created = resultSet.getTimestamp("created");
+                BigDecimal amount = resultSet.getBigDecimal("amount");
+                String transactionType = resultSet.getString("transaction_type");
+                String description = resultSet.getString("description");
+                int senderAccountId = resultSet.getInt("sender_account_id");
+                int receiverAccountId = resultSet.getInt("receiver_account_id");
+                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+            }
+            return transactionList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
     }
-
-
 }

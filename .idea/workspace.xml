@@ -4,19 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Repository and menu classes">
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="AccountService &amp; TransactionService adding balance and transferFunds">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/LoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/PasswordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/swoshDB.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/swoshDBConfig.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +43,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/Juhniel/IdeaProjects/BlogPostProject",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.editor",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -98,7 +101,8 @@
       <workItem from="1685000284132" duration="5189000" />
       <workItem from="1685005506952" duration="2445000" />
       <workItem from="1685012990089" duration="8825000" />
-      <workItem from="1685029612483" duration="9942000" />
+      <workItem from="1685029612483" duration="24552000" />
+      <workItem from="1685093819693" duration="10776000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -118,7 +122,37 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1685013658065</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="MainMenu, addUser and loginMenu working">
+      <created>1685043762408</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1685043762408</updated>
+    </task>
+    <task id="LOCAL−00005" summary="several menu changes and added methods for sql queries in repositories">
+      <created>1685053070404</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1685053070404</updated>
+    </task>
+    <task id="LOCAL−00006" summary="Fixed delete user update and UserMenu">
+      <created>1685054531124</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1685054531124</updated>
+    </task>
+    <task id="LOCAL−00007" summary="AccountMenu &amp; TransactionMenu">
+      <created>1685055907175</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1685055907175</updated>
+    </task>
+    <task id="LOCAL−00008" summary="AccountService &amp; TransactionService adding balance and transferFunds">
+      <created>1685057725912</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1685057725912</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +162,11 @@
     <MESSAGE value="Creating tables for database SwoshDB" />
     <MESSAGE value="Set up models" />
     <MESSAGE value="Repository and menu classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Repository and menu classes" />
+    <MESSAGE value="MainMenu, addUser and loginMenu working" />
+    <MESSAGE value="several menu changes and added methods for sql queries in repositories" />
+    <MESSAGE value="Fixed delete user update and UserMenu" />
+    <MESSAGE value="AccountMenu &amp; TransactionMenu" />
+    <MESSAGE value="AccountService &amp; TransactionService adding balance and transferFunds" />
+    <option name="LAST_COMMIT_MESSAGE" value="AccountService &amp; TransactionService adding balance and transferFunds" />
   </component>
 </project>
