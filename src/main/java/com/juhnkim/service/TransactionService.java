@@ -1,9 +1,11 @@
 package com.juhnkim.service;
 
 import com.juhnkim.model.Transaction;
+import com.juhnkim.model.User;
 import com.juhnkim.repository.AccountRepository;
 import com.juhnkim.repository.TransactionRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TransactionService {
@@ -19,12 +21,12 @@ public class TransactionService {
         return transactionRepository.transferFunds(transaction);
     }
 
-    public List<Transaction> showAllTransactions() {
-        return transactionRepository.showAllTransactions();
+    public List<Transaction> showAllTransactions(User loggedInUser) {
+        return transactionRepository.showAllTransactions(loggedInUser);
     }
 
-    public List<Transaction> showTransactionsByDate() {
-        return transactionRepository.showTransactionsByDate();
+    public List<Transaction> showTransactionsByDate(User loggedInUser, LocalDate date) {
+        return transactionRepository.showTransactionsByDate(loggedInUser, date);
     }
 
 

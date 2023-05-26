@@ -6,6 +6,7 @@ import com.juhnkim.model.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,11 +68,14 @@ public class TransactionRepository {
     }
 
 
-    public List<Transaction> showAllTransactions() {
-        String query = "SELECT * FROM transaction";
+    public List<Transaction> showAllTransactions(User user) {
+        String query = "SELECT * FROM transaction WHERE sender_account_id IN (SELECT id FROM account WHERE user_id = ?) OR receiver_account_id IN (SELECT id FROM account WHERE user_id = ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(2, user.getId());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -94,10 +98,15 @@ public class TransactionRepository {
     }
 
 
-    public List<Transaction> showTransactionsByDate() {
-        String query = "SELECT * FROM transaction ORDER BY created DESC";
+    public List<Transaction> showTransactionsByDate(User user, LocalDate date) {
+        String query = "SELECT * FROM transaction WHERE (sender_account_id IN (SELECT id FROM account WHERE user_id = ?) OR receiver_account_id IN (SELECT id FROM account WHERE user_id = ?)) AND DATE(created) = ? ORDER BY created DESC";
+
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(2, user.getId());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(date));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

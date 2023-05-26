@@ -73,14 +73,22 @@ public class AccountMenu {
     }
 
     public void handleCreateBankAccount(User loggedInUser) {
-        System.out.println("What would you like to call your account?");
+        System.out.println("What would you like to name your account?");
         String accountName = scan.nextLine();
         boolean isAccountCreated = accountService.createBankAccount(loggedInUser, accountName);
 
         if (isAccountCreated) {
-            System.out.println("Your new bank account has been created!");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.GREEN);
+            System.out.println("                Your account has been created!                      ");
+            System.out.println(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         } else {
-            System.out.println("Something went wrong..");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.RED);
+            System.out.println("             Failed to create account. Please try again later.      ");
+            System.out.println(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         }
     }
 
@@ -125,7 +133,7 @@ public class AccountMenu {
 
         if (isDeleted) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.BLUE);
+            System.out.println(ConsoleColors.GREEN);
             System.out.println("                Your account has been deleted!                      ");
             System.out.println(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
