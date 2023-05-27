@@ -55,7 +55,7 @@ public class AccountMenu {
     }
 
     public void handleAllUserAccounts(User loggedInUser) {
-        List<Account> userAccounts = accountService.getAllUserAccounts(loggedInUser);
+        List<Account> userAccounts = accountService.getAccountById(loggedInUser.getId());
 
         if (userAccounts.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
@@ -69,7 +69,6 @@ public class AccountMenu {
         for (Account userAccount : userAccounts) {
             System.out.println(userAccount.getAccountName() + " " + userAccount.getAccountNumber() + " " + userAccount.getBalance());
         }
-
     }
 
     public void handleCreateBankAccount(User loggedInUser) {

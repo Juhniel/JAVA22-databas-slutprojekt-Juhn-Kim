@@ -45,6 +45,6 @@ public class UserService {
 
     private boolean validatePassword(String password) {
         // Validate the password according to your rules. Here is a simple example
-        return password != null && password.length() >= 8;
+        return password != null && password.length() >= 4;
     }
 }

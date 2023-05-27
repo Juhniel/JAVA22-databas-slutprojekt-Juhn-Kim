@@ -28,6 +28,7 @@ public class UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                int user_id = resultSet.getInt("id");
                 String ssn = resultSet.getString("ssn");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
@@ -35,8 +36,7 @@ public class UserRepository {
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
-                User user = new User(name, ssn, email, online, phone, address, password);
-                user.setId(id);
+                User user = new User(user_id, name, ssn, email, online, phone, address, password);
                 return user;
             }
         } catch (SQLException e) {
@@ -56,19 +56,50 @@ public class UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 boolean online = resultSet.getBoolean("online");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
-                User user = new User(name, ssn, email, online, phone, address, password);
+                User user = new User(id, name, ssn, email, online, phone, address, password);
                 user.setSsn(ssn);
                 return user;
             }
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
+        return null;
+    }
+
+    public User getUserByPhone(String phone) {
+        String query = "SELECT * FROM user WHERE phone = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, phone);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int user_id = resultSet.getInt("id");
+                String ssn = resultSet.getString("ssn");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                boolean online = resultSet.getBoolean("online");
+                String userPhone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String password = resultSet.getString("password");
+
+                User user = new User(user_id, name, ssn, email, online, userPhone, address, password);
+                return user;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+
         return null;
     }
 

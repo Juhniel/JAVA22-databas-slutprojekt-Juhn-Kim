@@ -75,7 +75,7 @@ public class UserMenu {
         String phone = scan.nextLine();
         System.out.println("Enter address: ");
         String address = scan.nextLine();
-        userService.updateUser(new User(name, loggedInUser.getSsn(), email, false, phone, address, password));
+        userService.updateUser(new User(loggedInUser.getId(), name, loggedInUser.getSsn(), email, false, phone, address, password));
     }
 
     public void deleteExistingUser(User loggedInUser) {

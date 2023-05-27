@@ -20,12 +20,10 @@ public class AccountService {
         return accountRepository.getAccountById(id);
     }
 
-    public List<Account> getAllUserAccounts(User loggedInUser) {
-        return accountRepository.getAllUserAccounts(loggedInUser);
-    }
-
     public boolean createBankAccount(User loggedInUser, String accountName) {
-        return accountRepository.createBankAccount(loggedInUser, new Account(accountName, loggedInUser.getId()));
+        Account account = new Account();
+        account.setAccountName(accountName);
+        return accountRepository.createBankAccount(loggedInUser, account);
     }
 
     public boolean deleteBankAccount(Account userAccounts) {

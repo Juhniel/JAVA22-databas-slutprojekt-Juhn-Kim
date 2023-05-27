@@ -3,6 +3,7 @@ package com.juhnkim.view.consoleApplication;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
+import com.juhnkim.repository.UserRepository;
 import com.juhnkim.service.AccountService;
 import com.juhnkim.service.TransactionService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
@@ -14,13 +15,15 @@ import java.util.Scanner;
 
 public class TransactionMenu {
 
+    private final UserRepository userRepository;
     private final AccountService accountService;
     private final TransactionService transactionService;
 
     private final Scanner scan;
 
 
-    public TransactionMenu(AccountService accountService, TransactionService transactionService, Scanner scan) {
+    public TransactionMenu(UserRepository userRepository, AccountService accountService, TransactionService transactionService, Scanner scan) {
+        this.userRepository = userRepository;
         this.accountService = accountService;
         this.transactionService = transactionService;
         this.scan = scan;
@@ -86,16 +89,25 @@ public class TransactionMenu {
 
         System.out.println("Enter amount:");
         BigDecimal amount = scan.nextBigDecimal();
-        scan.nextLine(); // Consume the newline left-over
+        scan.nextLine();
         System.out.println("Enter message:");
         String description = scan.nextLine();
         System.out.println("Enter transaction type:");
         String transactionType = scan.nextLine();
-        System.out.println("Enter receivers bank number: ");
-        int receiverAccountId = scan.nextInt();
-        scan.nextLine();
+        System.out.println("Enter receivers phone number: ");
+        String phone = scan.nextLine();
+        User receiverUser = userRepository.getUserByPhone(phone);
 
-        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverAccountId));
+        if (receiverUser == null) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.RED);
+            System.out.println("             The phone number you entered does not match any user.  ");
+            System.out.println(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+            return;
+        }
+
+        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverUser.getId()));
     }
 
     public void handleShowAllTransactions(User loggedInUser) {

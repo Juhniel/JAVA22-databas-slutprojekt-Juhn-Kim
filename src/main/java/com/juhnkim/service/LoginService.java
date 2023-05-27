@@ -20,18 +20,21 @@ public class LoginService {
     }
 
     public User handleLogin(String ssn, String password) {
-
+        User user;
         try {
-            userService.getUserBySsn(ssn);
-            BCrypt.Result passwordMatch = BCrypt.verifyer().verify(password.toCharArray(), userService.getUserBySsn(ssn).getPassword());
-            if (passwordMatch.verified) {
-                setUserLogged(true);
-                return userService.getUserBySsn(ssn);
-            }
-
+            user = userService.getUserBySsn(ssn);
         } catch (Exception e) {
-            System.out.println("Something went wrong " + e);
+            System.out.println("User with the provided ssn not found.");
+            return null;
         }
-        return null;
+
+        BCrypt.Result passwordMatch = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+        if (passwordMatch.verified) {
+            setUserLogged(true);
+            return user;
+        } else {
+            System.out.println("Incorrect password.");
+            return null;
+        }
     }
 }

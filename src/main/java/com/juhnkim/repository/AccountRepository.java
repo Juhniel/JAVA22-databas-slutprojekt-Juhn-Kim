@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AccountRepository {
     private void setPreparedStatementValues(PreparedStatement preparedStatement, Account account) throws SQLException {
@@ -47,29 +48,6 @@ public class AccountRepository {
         }
     }
 
-    public List<Account> getAllUserAccounts(User user) {
-        String query = "SELECT * FROM account WHERE user_id = ?";
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, user.getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            List<Account> accounts = new ArrayList<>();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                BigDecimal balance = resultSet.getBigDecimal("balance");
-                // Assuming you have a constructor in your Account class that takes id and balance as arguments
-                Account account = new Account(id, balance);
-                accounts.add(account);
-            }
-            return accounts;
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Database operation failed", e);
-        }
-    }
 
     public boolean createBankAccount(User loggedInUser, Account account) {
         String query = "INSERT INTO account(account_name, account_number, balance, user_id) VALUES (?, ?, ?, ?)";
@@ -77,9 +55,12 @@ public class AccountRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
+            String accountNumber = UUID.randomUUID().toString();
+            account.setAccountNumber(accountNumber);
+
             preparedStatement.setString(1, account.getAccountName());
             preparedStatement.setString(2, account.getAccountNumber());
-            preparedStatement.setBigDecimal(3, account.getBalance());
+            preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));
             preparedStatement.setInt(4, loggedInUser.getId());
 
             int rowsAffected = preparedStatement.executeUpdate();

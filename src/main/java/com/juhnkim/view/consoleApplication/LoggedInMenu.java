@@ -29,6 +29,7 @@ public class LoggedInMenu {
         }
         int userOption;
         do {
+            System.out.println(loggedInUser.getId());
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
             System.out.println("                Choose one of the menu options:                     ");

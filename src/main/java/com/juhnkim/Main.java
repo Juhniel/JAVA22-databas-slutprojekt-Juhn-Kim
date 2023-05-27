@@ -28,7 +28,7 @@ public class Main {
         UserService userService = new UserService(userRepository, passwordService);
         LoginService loginService = new LoginService(userService);
 
-        TransactionMenu transactionMenu = new TransactionMenu(accountService, transactionService, scan);
+        TransactionMenu transactionMenu = new TransactionMenu(userRepository, accountService, transactionService, scan);
         AccountMenu accountMenu = new AccountMenu(accountService, scan);
         UserMenu userMenu = new UserMenu(userService, loginService, scan);
         LoggedInMenu loggedInMenu = new LoggedInMenu(transactionMenu, accountMenu, userMenu, loginService, scan);

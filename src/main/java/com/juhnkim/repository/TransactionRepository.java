@@ -20,28 +20,18 @@ public class TransactionRepository {
         preparedStatement.setInt(5, transaction.getReceiverAccountId());
     }
 
-//    public void addBalanceToAccount(Transaction transaction){
-//        String query = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
-//
-//        try (Connection connection = DatabaseConnection.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setBigDecimal(1, transaction.getAmount());
-//            preparedStatement.setInt(2, transaction.getId());
-//            preparedStatement.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Database operation failed", e);
-//        }
-//    }
-
     public boolean transferFunds(Transaction transaction) {
-        String query1 = "UPDATE account SET balance = balance - ? WHERE account_number = ?";
-        String query2 = "UPDATE account SET balance = balance + ? WHERE account_number = ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement1 = null;
+        PreparedStatement preparedStatement2 = null;
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
-             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+        String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
+        String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            preparedStatement1 = connection.prepareStatement(query1);
+            preparedStatement2 = connection.prepareStatement(query2);
 
             // start transaction
             connection.setAutoCommit(false);
@@ -56,14 +46,42 @@ public class TransactionRepository {
             preparedStatement2.setInt(2, transaction.getReceiverAccountId());
             int rowsAffected = preparedStatement2.executeUpdate();
 
-
             // end transaction
             connection.commit();
             connection.setAutoCommit(true);
             return rowsAffected > 0;
 
         } catch (SQLException e) {
+            try {
+                System.err.print("Transaction is being rolled back");
+                connection.rollback();
+            } catch (SQLException excep) {
+                excep.printStackTrace();
+            }
             throw new RuntimeException("Database operation failed", e);
+        } finally {
+            if (preparedStatement1 != null) {
+                try {
+                    preparedStatement1.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement2 != null) {
+                try {
+                    preparedStatement2.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

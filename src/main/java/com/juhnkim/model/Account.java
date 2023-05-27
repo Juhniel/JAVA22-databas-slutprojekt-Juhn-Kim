@@ -11,9 +11,8 @@ public class Account {
     private BigDecimal balance;
     private int userId;
 
-    public Account(int id, BigDecimal balance){
-        this.id = id;
-        this.balance = balance;
+    public Account() {
+
     }
 
     public Account(String accountName, int userId) {

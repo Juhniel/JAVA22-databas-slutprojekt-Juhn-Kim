@@ -13,7 +13,7 @@ public class User {
     private String address;
     private String password;
 
-    public User(String name, String ssn, String email, boolean online, String phone, String address, String password) {
+    public User(String ssn, String name, String email, boolean online, String phone, String address, String password) {
         this.ssn = ssn;
         this.name = name;
         this.email = email;
@@ -22,6 +22,19 @@ public class User {
         this.address = address;
         this.password = password;
     }
+
+    public User(int id, String name, String ssn, String email, boolean online, String phone, String address, String password) {
+        this.id = id;
+        this.ssn = ssn;
+        this.name = name;
+        this.email = email;
+        this.online = online;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+    }
+
+
 
     public int getId() {
         return id;
