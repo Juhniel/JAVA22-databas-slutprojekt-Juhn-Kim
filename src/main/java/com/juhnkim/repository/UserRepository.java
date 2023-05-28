@@ -103,15 +103,28 @@ public class UserRepository {
         return null;
     }
 
-    public boolean addUser(User user) {
+    public User addUser(User user) {
         String query = "INSERT INTO user(ssn, name, email, online, phone, address, password) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setPreparedStatementValues(preparedStatement, user);
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+
+            return user;
 
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);

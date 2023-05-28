@@ -33,7 +33,6 @@ public class LoginMenu {
             System.out.println("Enter Password: ");
             String password = scan.nextLine();
             loggedInUser = loginService.handleLogin(ssn, password);
-
             if (loggedInUser != null) {
                 System.out.println("--------------------------------------------------------------------");
                 System.out.print(ConsoleColors.GREEN);

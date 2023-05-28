@@ -9,6 +9,7 @@ public class Account {
     private String accountName;
     private String accountNumber;
     private BigDecimal balance;
+    private boolean isDefault;
     private int userId;
 
     public Account() {
@@ -20,11 +21,12 @@ public class Account {
         this.userId = userId;
     }
 
-    public Account(int id, String accountName, String accountNumber, BigDecimal balance, int userId) {
+    public Account(int id, String accountName, String accountNumber, BigDecimal balance, boolean isDefault, int userId) {
         this.id = id;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.isDefault = isDefault;
         this.userId = userId;
     }
 
@@ -66,6 +68,14 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 
     public int getUserId() {

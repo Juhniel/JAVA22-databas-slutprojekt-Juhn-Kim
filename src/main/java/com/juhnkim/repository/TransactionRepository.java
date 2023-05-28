@@ -1,6 +1,7 @@
 package com.juhnkim.repository;
 
 import com.juhnkim.database.DatabaseConnection;
+import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
 
@@ -12,6 +13,12 @@ import java.util.List;
 
 public class TransactionRepository {
 
+    private final AccountRepository accountRepository;
+
+    public TransactionRepository(AccountRepository accountRepository){
+        this.accountRepository = accountRepository;
+    }
+
     private void setPreparedStatementValues(PreparedStatement preparedStatement, Transaction transaction) throws SQLException {
         preparedStatement.setBigDecimal(1, transaction.getAmount());
         preparedStatement.setString(2, transaction.getTransactionType());
@@ -20,10 +27,30 @@ public class TransactionRepository {
         preparedStatement.setInt(5, transaction.getReceiverAccountId());
     }
 
+    public boolean addTransaction(Transaction transaction) {
+        String query = "INSERT INTO transaction(amount, transaction_type, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setBigDecimal(1, transaction.getAmount());
+            preparedStatement.setString(2, transaction.getTransactionType());
+            preparedStatement.setString(3, transaction.getDescription());
+            preparedStatement.setInt(4, transaction.getSenderAccountId());
+            preparedStatement.setInt(5, transaction.getReceiverAccountId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+    }
+
     public boolean transferFunds(Transaction transaction) {
         Connection connection = null;
-        PreparedStatement preparedStatement1 = null;
-        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement1;
+        PreparedStatement preparedStatement2;
 
         String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
@@ -41,47 +68,34 @@ public class TransactionRepository {
             preparedStatement1.setInt(2, transaction.getSenderAccountId());
             preparedStatement1.executeUpdate();
 
-            // add amount to receiver's account
+            // Get receiver's default account ID
+            int receiverId = transaction.getReceiverAccountId();
+            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
+            if (defaultAccount == null) {
+                throw new Exception("Receiver has no default account");
+            }
+            int receiverAccountId = defaultAccount.getId();
+
+            // add amount to receiver's default account
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
-            preparedStatement2.setInt(2, transaction.getReceiverAccountId());
+            preparedStatement2.setInt(2, receiverAccountId);
             int rowsAffected = preparedStatement2.executeUpdate();
 
+            addTransaction(transaction);
             // end transaction
             connection.commit();
             connection.setAutoCommit(true);
             return rowsAffected > 0;
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             try {
                 System.err.print("Transaction is being rolled back");
+                assert connection != null;
                 connection.rollback();
             } catch (SQLException excep) {
                 excep.printStackTrace();
             }
             throw new RuntimeException("Database operation failed", e);
-        } finally {
-            if (preparedStatement1 != null) {
-                try {
-                    preparedStatement1.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (preparedStatement2 != null) {
-                try {
-                    preparedStatement2.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 

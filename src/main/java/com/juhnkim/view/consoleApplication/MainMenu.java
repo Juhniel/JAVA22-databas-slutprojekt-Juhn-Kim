@@ -1,6 +1,7 @@
 package com.juhnkim.view.consoleApplication;
 
 import com.juhnkim.model.User;
+import com.juhnkim.service.AccountService;
 import com.juhnkim.service.PasswordService;
 import com.juhnkim.service.UserService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
@@ -10,11 +11,13 @@ import java.util.Scanner;
 public class MainMenu {
 
     private final UserService userService;
+    private final AccountService accountService;
     private final LoginMenu loginMenu;
     private final Scanner scan;
 
-    public MainMenu(UserService userService, LoginMenu loginMenu, Scanner scan) {
+    public MainMenu(UserService userService, AccountService accountService, LoginMenu loginMenu, Scanner scan) {
         this.userService = userService;
+        this.accountService = accountService;
         this.loginMenu = loginMenu;
         this.scan = scan;
     }
@@ -88,20 +91,19 @@ public class MainMenu {
 
         String hashedPassword = userService.validateAndHashPassword(password);
 
-        boolean isUserAdded = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
-        if (isUserAdded) {
-            System.out.println("--------------------------------------------------------------------");
+        User registeredUser = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
+        accountService.createBankAccount(registeredUser, "Default Account");
+
+        System.out.println("--------------------------------------------------------------------");
+        if (registeredUser != null) {
             System.out.print(ConsoleColors.GREEN);
-            System.out.println("                        User added!                                 ");
-            System.out.print(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                  User registered & account was opened!         ");
         } else {
-            System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.RED);
-            System.out.println("                        Failed to add user - Try again later        ");
-            System.out.print(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                   Failed to add user - Try again later         ");
         }
+        System.out.print(ConsoleColors.RESET);
+        System.out.println("--------------------------------------------------------------------");
     }
 }
 

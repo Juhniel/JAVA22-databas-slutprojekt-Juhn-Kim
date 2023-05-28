@@ -55,7 +55,7 @@ public class AccountMenu {
     }
 
     public void handleAllUserAccounts(User loggedInUser) {
-        List<Account> userAccounts = accountService.getAccountById(loggedInUser.getId());
+        List<Account> userAccounts = accountService.getAllUserAccountsById(loggedInUser.getId());
 
         if (userAccounts.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
@@ -67,7 +67,9 @@ public class AccountMenu {
         }
 
         for (Account userAccount : userAccounts) {
-            System.out.println(userAccount.getAccountName() + " " + userAccount.getAccountNumber() + " " + userAccount.getBalance());
+            System.out.println("Account name: " + userAccount.getAccountName());
+            System.out.println("Account number: " + userAccount.getAccountNumber());
+            System.out.println("Balance: " + userAccount.getBalance() + "\n");
         }
     }
 
@@ -93,7 +95,7 @@ public class AccountMenu {
 
     public void handleDeleteBankAccount(User loggedInUser) {
 
-        List<Account> allAccountsFromUser = accountService.getAccountById(loggedInUser.getId());
+        List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 
         if (allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");

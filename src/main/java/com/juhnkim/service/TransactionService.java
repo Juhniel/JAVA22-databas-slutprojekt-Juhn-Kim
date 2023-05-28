@@ -1,5 +1,6 @@
 package com.juhnkim.service;
 
+import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
 import com.juhnkim.repository.AccountRepository;
@@ -10,14 +11,29 @@ import java.util.List;
 
 public class TransactionService {
     private final TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
 
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, AccountRepository accountRepository) {
         this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
     }
 
     public boolean transferFunds(Transaction transaction) {
+        // Get the sender's user ID
+        int senderUserId = transaction.getSenderAccountId();
 
-        // SE TILL ATT VERIFIERA TILLGÄNGLIGA BELOPP PÅ KONTON INNAN TRANSAKTIONER TILLÅTS
+        // Get the sender's default account
+        Account senderAccount = accountRepository.getDefaultAccountForUser(senderUserId);
+        if (senderAccount == null) {
+            throw new RuntimeException("Sender account not found");
+        }
+
+        // Check if the sender has enough funds
+        if (senderAccount.getBalance().compareTo(transaction.getAmount()) < 0) {
+            throw new IllegalArgumentException("Insufficient funds for the transaction.");
+        }
+
+        // If the sender has enough funds, execute the transaction
         return transactionRepository.transferFunds(transaction);
     }
 

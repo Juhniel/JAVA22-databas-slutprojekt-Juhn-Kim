@@ -64,7 +64,7 @@ public class TransactionMenu {
     }
 
     public void handleTransferFunds(User loggedInUser) {
-        List<Account> allAccountsFromUser = accountService.getAccountById(loggedInUser.getId());
+        List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 
         if(allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
@@ -101,7 +101,7 @@ public class TransactionMenu {
         if (receiverUser == null) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println(ConsoleColors.RED);
-            System.out.println("             The phone number you entered does not match any user.  ");
+            System.out.println("             The phone number you entered \n does not match any user.  ");
             System.out.println(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;

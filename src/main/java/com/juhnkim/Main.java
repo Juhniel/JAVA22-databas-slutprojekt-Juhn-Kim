@@ -20,9 +20,9 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         AccountRepository accountRepository = new AccountRepository();
         UserRepository userRepository = new UserRepository();
-        TransactionRepository transactionRepository = new TransactionRepository();
+        TransactionRepository transactionRepository = new TransactionRepository(accountRepository);
 
-        TransactionService transactionService = new TransactionService(transactionRepository);
+        TransactionService transactionService = new TransactionService(transactionRepository, accountRepository);
         PasswordService passwordService = new PasswordService();
         AccountService accountService = new AccountService(accountRepository);
         UserService userService = new UserService(userRepository, passwordService);
@@ -33,7 +33,7 @@ public class Main {
         UserMenu userMenu = new UserMenu(userService, loginService, scan);
         LoggedInMenu loggedInMenu = new LoggedInMenu(transactionMenu, accountMenu, userMenu, loginService, scan);
         LoginMenu loginMenu = new LoginMenu(loginService, scan, loggedInMenu);
-        MainMenu mainMenu = new MainMenu(userService, loginMenu, scan);
+        MainMenu mainMenu = new MainMenu(userService, accountService, loginMenu, scan);
 
         mainMenu.displayMainMenu();
     }

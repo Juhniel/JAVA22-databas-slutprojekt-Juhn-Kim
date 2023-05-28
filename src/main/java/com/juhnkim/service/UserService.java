@@ -13,7 +13,7 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
-    public boolean addUser(User user) {
+    public User addUser(User user) {
         return userRepository.addUser(user);
     }
 

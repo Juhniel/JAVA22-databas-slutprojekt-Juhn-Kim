@@ -22,7 +22,7 @@ public class AccountRepository {
     }
 
 
-    public List<Account> getAccountById(int id) {
+    public List<Account> getAllUserAccountsById(int id) {
         String query = "SELECT * FROM account WHERE user_id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -37,9 +37,10 @@ public class AccountRepository {
                 String accountName = resultSet.getString("account_name");
                 String accountNumber = resultSet.getString("account_number");
                 BigDecimal balance = resultSet.getBigDecimal("balance");
+                boolean isDefault = resultSet.getBoolean("is_default");
                 int loggedInUserId = resultSet.getInt("user_id");
 
-                accounts.add(new Account(accountId, accountName, accountNumber, balance, loggedInUserId));
+                accounts.add(new Account(accountId, accountName, accountNumber, balance, isDefault, loggedInUserId));
             }
             return accounts;
 
@@ -48,9 +49,34 @@ public class AccountRepository {
         }
     }
 
+    public Account getDefaultAccountForUser(int userId) {
+        String query = "SELECT * FROM account WHERE user_id = ? AND is_default = TRUE";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String accountName = resultSet.getString("account_name");
+                String accountNumber = resultSet.getString("account_number");
+                BigDecimal balance = resultSet.getBigDecimal("balance");
+                boolean isDefault = resultSet.getBoolean("is_default");
+
+                return new Account(id, accountName, accountNumber, balance, isDefault, userId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Database operation failed", e);
+        }
+        return null;
+    }
+
 
     public boolean createBankAccount(User loggedInUser, Account account) {
-        String query = "INSERT INTO account(account_name, account_number, balance, user_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO account(account_name, account_number, balance, is_default, user_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -61,7 +87,8 @@ public class AccountRepository {
             preparedStatement.setString(1, account.getAccountName());
             preparedStatement.setString(2, account.getAccountNumber());
             preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));
-            preparedStatement.setInt(4, loggedInUser.getId());
+            preparedStatement.setBoolean(4, account.isDefault());
+            preparedStatement.setInt(5, loggedInUser.getId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;

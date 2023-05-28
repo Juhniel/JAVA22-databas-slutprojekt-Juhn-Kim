@@ -38,9 +38,10 @@ public class DatabaseInitializer {
             String query = "CREATE TABLE IF NOT EXISTS account (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "account_name VARCHAR(100), " +
-                    "account_number VARCHAR(20), " +
+                    "account_number VARCHAR(100), " +
                     "balance DECIMAL(19, 2)," +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "is_default BOOLEAN DEFAULT FALSE," +
                     "user_id INT, " +
                     "FOREIGN KEY (user_id) REFERENCES user(id))";
 
