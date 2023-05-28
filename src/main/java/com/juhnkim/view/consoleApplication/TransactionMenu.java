@@ -10,6 +10,7 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -76,14 +77,27 @@ public class TransactionMenu {
         }
 
         System.out.println("Here are your accounts:");
-        int index = 1;
+        int i = 1;
         for(Account account : allAccountsFromUser) {
-            System.out.println(index + ". " + account.getAccountName() + " " + account.getAccountNumber());
-            index++;
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Account " + i);
+            System.out.println("Account name: " + account.getAccountName());
+            System.out.println("Account number: " + account.getAccountNumber());
+            System.out.println("--------------------------------------------------------------------");
+            i++;
         }
-        System.out.println("Select your bank account:");
-        int accountIndex = scan.nextInt();
-        scan.nextLine();
+
+        int accountIndex = -1;
+        while(accountIndex < 1 || accountIndex > allAccountsFromUser.size()) {
+            System.out.println("Select the number corresponding to the account:");
+            try {
+                accountIndex = scan.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine(); // clear the invalid input
+            }
+        }
+        scan.nextLine(); // clear the line
 
         Account senderAccount = allAccountsFromUser.get(accountIndex - 1);
 
@@ -117,7 +131,11 @@ public class TransactionMenu {
             return;
         }
         for (Transaction transaction : transactions) {
-            System.out.println(transaction);
+            System.out.println("Date: " + transaction.getCreated());
+            System.out.println("From: " + userRepository.getUserById(transaction.getSenderAccountId()).getName());
+            System.out.println("To: " + userRepository.getUserById(transaction.getReceiverAccountId()).getName());
+            System.out.println("Amount: " + transaction.getAmount());
+            System.out.println("Transaction type: " + transaction.getTransactionType());
         }
     }
 

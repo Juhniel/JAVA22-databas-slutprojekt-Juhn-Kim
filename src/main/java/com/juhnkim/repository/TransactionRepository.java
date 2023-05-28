@@ -48,27 +48,17 @@ public class TransactionRepository {
     }
 
     public boolean transferFunds(Transaction transaction) {
-        Connection connection = null;
-        PreparedStatement preparedStatement1;
-        PreparedStatement preparedStatement2;
-
         String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
 
-        try {
-            connection = DatabaseConnection.getConnection();
-            preparedStatement1 = connection.prepareStatement(query1);
-            preparedStatement2 = connection.prepareStatement(query2);
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
+             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
 
-            // start transaction
-            connection.setAutoCommit(false);
-
-            // subtract amount from sender's account
             preparedStatement1.setBigDecimal(1, transaction.getAmount());
             preparedStatement1.setInt(2, transaction.getSenderAccountId());
             preparedStatement1.executeUpdate();
 
-            // Get receiver's default account ID
             int receiverId = transaction.getReceiverAccountId();
             Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
             if (defaultAccount == null) {
@@ -76,28 +66,62 @@ public class TransactionRepository {
             }
             int receiverAccountId = defaultAccount.getId();
 
-            // add amount to receiver's default account
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
             preparedStatement2.setInt(2, receiverAccountId);
             int rowsAffected = preparedStatement2.executeUpdate();
 
             addTransaction(transaction);
-            // end transaction
-            connection.commit();
-            connection.setAutoCommit(true);
+
             return rowsAffected > 0;
 
         } catch (Exception e) {
-            try {
-                System.err.print("Transaction is being rolled back");
-                assert connection != null;
-                connection.rollback();
-            } catch (SQLException excep) {
-                excep.printStackTrace();
-            }
             throw new RuntimeException("Database operation failed", e);
         }
     }
+
+//    public boolean transferFunds(Transaction transaction) {
+//        String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
+//        String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
+//
+//        try (Connection connection = DatabaseConnection.getConnection();
+//             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
+//             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+//
+//            connection.setAutoCommit(false);
+//
+//            preparedStatement1.setBigDecimal(1, transaction.getAmount());
+//            preparedStatement1.setInt(2, transaction.getSenderAccountId());
+//            preparedStatement1.executeUpdate();
+//
+//            int receiverId = transaction.getReceiverAccountId();
+//            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
+//            if (defaultAccount == null) {
+//                throw new Exception("Receiver has no default account");
+//            }
+//            int receiverAccountId = defaultAccount.getId();
+//
+//            preparedStatement2.setBigDecimal(1, transaction.getAmount());
+//            preparedStatement2.setInt(2, receiverAccountId);
+//            int rowsAffected = preparedStatement2.executeUpdate();
+//
+//            addTransaction(transaction);
+//
+//            connection.commit();
+//
+//            return rowsAffected > 0;
+//        } catch (Exception e) {
+//            Connection connection = DatabaseConnection.getConnection();
+//            if (connection != null) {
+//                try {
+//                    System.err.print("Transaction is being rolled back");
+//                    connection.rollback();
+//                } catch (SQLException excep) {
+//                    excep.printStackTrace();
+//                }
+//            }
+//            throw new RuntimeException("Database operation failed", e);
+//        }
+//    }
 
 
     public List<Transaction> showAllTransactions(User user) {

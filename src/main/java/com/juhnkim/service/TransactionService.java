@@ -22,6 +22,8 @@ public class TransactionService {
         // Get the sender's user ID
         int senderUserId = transaction.getSenderAccountId();
 
+        System.out.println("Sender accountId:" + senderUserId);
+
         // Get the sender's default account
         Account senderAccount = accountRepository.getDefaultAccountForUser(senderUserId);
         if (senderAccount == null) {

@@ -67,9 +67,11 @@ public class AccountMenu {
         }
 
         for (Account userAccount : userAccounts) {
+            System.out.println("--------------------------------------------------------------------");
             System.out.println("Account name: " + userAccount.getAccountName());
             System.out.println("Account number: " + userAccount.getAccountNumber());
-            System.out.println("Balance: " + userAccount.getBalance() + "\n");
+            System.out.println("Balance: " + userAccount.getBalance());
+            System.out.println("--------------------------------------------------------------------\n");
         }
     }
 

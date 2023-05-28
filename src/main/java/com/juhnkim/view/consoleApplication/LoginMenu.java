@@ -22,16 +22,23 @@ public class LoginMenu {
 
         int loginAttempts = 0;
 
-        while (loggedInUser == null) {
+        while (!loginService.isUserLogged()) {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
-            System.out.println("                                Login                               ");
+            System.out.println("                              ** LOGIN **                           ");
+            System.out.println("                       Enter 'exit' to go back to menu              ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             System.out.println("Enter your ssn: ");
             String ssn = scan.nextLine();
+            if(ssn.equalsIgnoreCase("exit")){
+                break;
+            }
             System.out.println("Enter Password: ");
             String password = scan.nextLine();
+            if(password.equalsIgnoreCase("exit")){
+                break;
+            }
             loggedInUser = loginService.handleLogin(ssn, password);
             if (loggedInUser != null) {
                 System.out.println("--------------------------------------------------------------------");

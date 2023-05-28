@@ -55,8 +55,10 @@ public class LoggedInMenu {
                 break;
             case 3:
                 userMenu.displayUserMenu(loggedInUser);
+                break;
             case 0:
                 loginService.setUserLogged(false);
+
                 break;
             default:
                 System.out.println("--------------------------------------------------------------------");
