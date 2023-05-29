@@ -6,6 +6,7 @@ import com.juhnkim.service.PasswordService;
 import com.juhnkim.service.UserService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainMenu {

@@ -21,9 +21,8 @@ public class AccountRepository {
         preparedStatement.setInt(4, account.getUserId());
     }
 
-
     public List<Account> getAllUserAccountsById(int id) {
-        String query = "SELECT * FROM account WHERE user_id = ?";
+        String query = "SELECT * FROM account WHERE user_id = ? AND is_deleted = FALSE";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -84,6 +83,7 @@ public class AccountRepository {
             String accountNumber = UUID.randomUUID().toString();
             account.setAccountNumber(accountNumber);
 
+            // ersätt med metod
             preparedStatement.setString(1, account.getAccountName());
             preparedStatement.setString(2, account.getAccountNumber());
             preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));
@@ -99,7 +99,7 @@ public class AccountRepository {
     }
 
     public boolean deleteBankAccount(Account account) {
-        String query = "UPDATE account SET is_deleted = TRUE, deleted_at = NOW() WHERE id = ?";
+        String query = "UPDATE account SET account_name = 'Deleted Account Name', is_deleted = TRUE, account_number = 'Deleted Account Number', balance = 0, deleted_at = NOW() WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

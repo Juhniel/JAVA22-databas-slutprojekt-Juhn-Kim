@@ -30,16 +30,16 @@ public class AccountService {
         List<Account> allAccountsFromUser = accountRepository.getAllUserAccountsById(loggedInUser.getId());
         boolean hasDefaultAccount = allAccountsFromUser.stream().anyMatch(Account::isDefault);
         if (!hasDefaultAccount) {
-            // this is the first account, or there is no default account, so make this the default
             account.setDefault(true);
         } else {
-            // this user already has a default account, so this new one isn't the default
             account.setDefault(false);
         }
         return accountRepository.createBankAccount(loggedInUser, account);
     }
 
     public boolean deleteBankAccount(Account userAccounts) {
+
+        // Kolla så att default account inte går att deletas om andra accounts finns
         return accountRepository.deleteBankAccount(userAccounts);
     }
 

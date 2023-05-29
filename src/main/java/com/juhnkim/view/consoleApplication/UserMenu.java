@@ -81,7 +81,7 @@ public class UserMenu {
     public void deleteExistingUser(User loggedInUser) {
         System.out.println("--------------------------------------------------------------------");
         System.out.println(ConsoleColors.BLUE);
-        System.out.println("        All your bank accounts will be closed and your account will permanently be deleted.");
+        System.out.println("        All your bank accounts will be closed and your account\n will permanently be deleted.");
         System.out.println("        Are you still sure you want to delete your account?         ");
         System.out.println("                                y/n:                                ");
         System.out.println(ConsoleColors.RESET);
@@ -89,15 +89,6 @@ public class UserMenu {
         String userOption = scan.nextLine();
 
         if (userOption.equals("y")) {
-//            List<Comments> userComments = commentService.getCommentsByUser(loggedInUser.getId());
-//            for (Comments comment : userComments) {
-//                commentService.deleteComment(comment);
-//            }
-//
-//            List<Post> userPosts = postService.getPostsByUser(loggedInUser.getId());
-//            for (Post post : userPosts) {
-//                postService.deletePost(post);
-//            }
 
             boolean isUserDeleted = userService.deleteUser(loggedInUser);
 

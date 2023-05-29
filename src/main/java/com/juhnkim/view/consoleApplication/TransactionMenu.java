@@ -133,8 +133,8 @@ public class TransactionMenu {
         }
         for (Transaction transaction : transactions) {
             System.out.println("Date: " + transaction.getCreated());
-            System.out.println("From: " + userRepository.getUserById(transaction.getSenderAccountId()).getName());
-            System.out.println("To: " + userRepository.getUserById(transaction.getReceiverAccountId()).getName());
+            System.out.println("From Sender id: " + transaction.getSenderAccountId());
+            System.out.println("To Receiver id: " + transaction.getReceiverAccountId());
             System.out.println("Amount: " + transaction.getAmount());
         }
     }

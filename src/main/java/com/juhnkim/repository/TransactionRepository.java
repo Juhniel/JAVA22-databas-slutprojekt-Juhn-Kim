@@ -35,6 +35,7 @@ public class TransactionRepository {
             System.out.println("SENDER ACCOUNT ID" + senderAccount.getId());
             System.out.println("RECEIVER ACCOUNT ID" + transaction.getReceiverAccountId());
 
+            // Ersätt med metod
             preparedStatement.setBigDecimal(1, transaction.getAmount());
             preparedStatement.setString(2, transaction.getDescription());
             preparedStatement.setInt(3, senderAccount.getId());
