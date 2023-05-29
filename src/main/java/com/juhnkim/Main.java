@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
 //        DatabaseInitializer c = new DatabaseInitializer();
 //        c.createUserTable();
 //        c.createAccountTable();
@@ -22,9 +23,10 @@ public class Main {
         UserRepository userRepository = new UserRepository();
         TransactionRepository transactionRepository = new TransactionRepository(accountRepository);
 
-        TransactionService transactionService = new TransactionService(transactionRepository, accountRepository);
+
         PasswordService passwordService = new PasswordService();
         AccountService accountService = new AccountService(accountRepository);
+        TransactionService transactionService = new TransactionService(transactionRepository, accountService);
         UserService userService = new UserService(userRepository, passwordService);
         LoginService loginService = new LoginService(userService);
 

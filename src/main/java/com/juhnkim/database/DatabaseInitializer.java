@@ -1,7 +1,5 @@
 package com.juhnkim.database;
 
-import com.juhnkim.database.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -20,7 +18,9 @@ public class DatabaseInitializer {
                     "online BOOLEAN, " +
                     "phone VARCHAR(20), " +
                     "address VARCHAR(100), " +
-                    "password VARCHAR(255)" +
+                    "password VARCHAR(255)," +
+                    "is_deleted BOOLEAN DEFAULT FALSE," +
+                    "deleted_at TIMESTAMP" +
                     ")";
 
             int result = statement.executeUpdate(query);
@@ -42,6 +42,8 @@ public class DatabaseInitializer {
                     "balance DECIMAL(19, 2)," +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "is_default BOOLEAN DEFAULT FALSE," +
+                    "is_deleted BOOLEAN DEFAULT FALSE," +
+                    "deleted_at TIMESTAMP," +
                     "user_id INT, " +
                     "FOREIGN KEY (user_id) REFERENCES user(id))";
 
@@ -61,7 +63,6 @@ public class DatabaseInitializer {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "amount DECIMAL(19, 2), " +
-                    "transaction_type VARCHAR(20), " +
                     "description VARCHAR(255), " +
                     "sender_account_id INT, " +
                     "receiver_account_id INT, " +

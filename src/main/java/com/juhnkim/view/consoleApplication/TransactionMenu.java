@@ -106,13 +106,12 @@ public class TransactionMenu {
         scan.nextLine();
         System.out.println("Enter message:");
         String description = scan.nextLine();
-        System.out.println("Enter transaction type:");
-        String transactionType = scan.nextLine();
         System.out.println("Enter receivers phone number: ");
         String phone = scan.nextLine();
         User receiverUser = userRepository.getUserByPhone(phone);
+        Account receiverAccount = accountService.getDefaultAccountForUser(receiverUser.getId());
 
-        if (receiverUser == null) {
+        if (receiverAccount == null) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println(ConsoleColors.RED);
             System.out.println("             The phone number you entered \n does not match any user.  ");
@@ -120,8 +119,10 @@ public class TransactionMenu {
             System.out.println("--------------------------------------------------------------------");
             return;
         }
+        System.out.println("DU SKICKAR FRÅN: " + senderAccount.getId());
+        System.out.println("DU SKICKAR TILL " + receiverAccount.getId());
 
-        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverUser.getId()));
+        transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), loggedInUser);
     }
 
     public void handleShowAllTransactions(User loggedInUser) {
@@ -135,7 +136,6 @@ public class TransactionMenu {
             System.out.println("From: " + userRepository.getUserById(transaction.getSenderAccountId()).getName());
             System.out.println("To: " + userRepository.getUserById(transaction.getReceiverAccountId()).getName());
             System.out.println("Amount: " + transaction.getAmount());
-            System.out.println("Transaction type: " + transaction.getTransactionType());
         }
     }
 

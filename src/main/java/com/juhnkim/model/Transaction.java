@@ -7,24 +7,21 @@ public class Transaction {
     private int id;
     private Timestamp created;
     private BigDecimal amount;
-    private String transactionType;
     private String description;
     private int senderAccountId;
     private int receiverAccountId;
 
-    public Transaction(BigDecimal amount, String transactionType, String description, int senderAccountId, int receiverAccountId) {
+    public Transaction(BigDecimal amount, String description, int senderAccountId, int receiverAccountId) {
         this.amount = amount;
-        this.transactionType = transactionType;
         this.description = description;
         this.senderAccountId = senderAccountId;
         this.receiverAccountId = receiverAccountId;
     }
 
-    public Transaction(int id, Timestamp created, BigDecimal amount, String transactionType, String description, int senderAccountId, int receiverAccountId) {
+    public Transaction(int id, Timestamp created, BigDecimal amount, String description, int senderAccountId, int receiverAccountId) {
         this.id = id;
         this.created = created;
         this.amount = amount;
-        this.transactionType = transactionType;
         this.description = description;
         this.senderAccountId = senderAccountId;
         this.receiverAccountId = receiverAccountId;
@@ -54,13 +51,6 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
 
     public String getDescription() {
         return description;

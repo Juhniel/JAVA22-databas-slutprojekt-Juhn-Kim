@@ -148,20 +148,25 @@ public class UserRepository {
     }
 
     public boolean deleteUser(User user) {
-        String query = "DELETE FROM user WHERE id = ?";
+        String query1 = "UPDATE account SET is_deleted = TRUE, deleted_at = NOW() WHERE user_id = ?";
+        String query2 = "UPDATE user SET is_deleted = TRUE, deleted_at = NOW() WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
+             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
 
-            preparedStatement.setInt(1, user.getId());
+            // Delete all bank accounts associated with this user
+            preparedStatement1.setInt(1, user.getId());
+            preparedStatement1.executeUpdate();
 
-            int rowsAffected = preparedStatement.executeUpdate();
+            // Delete the user
+            preparedStatement2.setInt(1, user.getId());
+            int rowsAffected = preparedStatement2.executeUpdate();
 
             return rowsAffected > 0;
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
-
     }
 }

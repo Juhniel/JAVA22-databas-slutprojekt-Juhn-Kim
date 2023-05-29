@@ -21,23 +21,24 @@ public class TransactionRepository {
 
     private void setPreparedStatementValues(PreparedStatement preparedStatement, Transaction transaction) throws SQLException {
         preparedStatement.setBigDecimal(1, transaction.getAmount());
-        preparedStatement.setString(2, transaction.getTransactionType());
-        preparedStatement.setString(3, transaction.getDescription());
-        preparedStatement.setInt(4, transaction.getSenderAccountId());
-        preparedStatement.setInt(5, transaction.getReceiverAccountId());
+        preparedStatement.setString(2, transaction.getDescription());
+        preparedStatement.setInt(3, transaction.getSenderAccountId());
+        preparedStatement.setInt(4, transaction.getReceiverAccountId());
     }
 
-    public boolean addTransaction(Transaction transaction) {
-        String query = "INSERT INTO transaction(amount, transaction_type, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
+    public boolean addTransaction(Transaction transaction, Account senderAccount) {
+        String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
+            System.out.println("SENDER ACCOUNT ID" + senderAccount.getId());
+            System.out.println("RECEIVER ACCOUNT ID" + transaction.getReceiverAccountId());
+
             preparedStatement.setBigDecimal(1, transaction.getAmount());
-            preparedStatement.setString(2, transaction.getTransactionType());
-            preparedStatement.setString(3, transaction.getDescription());
-            preparedStatement.setInt(4, transaction.getSenderAccountId());
-            preparedStatement.setInt(5, transaction.getReceiverAccountId());
+            preparedStatement.setString(2, transaction.getDescription());
+            preparedStatement.setInt(3, senderAccount.getId());
+            preparedStatement.setInt(4, transaction.getReceiverAccountId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
@@ -47,7 +48,7 @@ public class TransactionRepository {
         }
     }
 
-    public boolean transferFunds(Transaction transaction) {
+    public boolean transferFunds(Transaction transaction, Account senderAccount) {
         String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
 
@@ -59,18 +60,18 @@ public class TransactionRepository {
             preparedStatement1.setInt(2, transaction.getSenderAccountId());
             preparedStatement1.executeUpdate();
 
-            int receiverId = transaction.getReceiverAccountId();
-            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
-            if (defaultAccount == null) {
-                throw new Exception("Receiver has no default account");
-            }
-            int receiverAccountId = defaultAccount.getId();
+
+            Account defaultAccount = accountRepository.getDefaultAccountForUser(senderAccount.getUserId());
+            int receiverUserId = defaultAccount.getId();
+
+            System.out.println("RECEIVER USER ID" + transaction.getReceiverAccountId());
+
 
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
-            preparedStatement2.setInt(2, receiverAccountId);
+            preparedStatement2.setInt(2, receiverUserId);
             int rowsAffected = preparedStatement2.executeUpdate();
 
-            addTransaction(transaction);
+            addTransaction(transaction, senderAccount);
 
             return rowsAffected > 0;
 
@@ -78,50 +79,6 @@ public class TransactionRepository {
             throw new RuntimeException("Database operation failed", e);
         }
     }
-
-//    public boolean transferFunds(Transaction transaction) {
-//        String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
-//        String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
-//
-//        try (Connection connection = DatabaseConnection.getConnection();
-//             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
-//             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
-//
-//            connection.setAutoCommit(false);
-//
-//            preparedStatement1.setBigDecimal(1, transaction.getAmount());
-//            preparedStatement1.setInt(2, transaction.getSenderAccountId());
-//            preparedStatement1.executeUpdate();
-//
-//            int receiverId = transaction.getReceiverAccountId();
-//            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
-//            if (defaultAccount == null) {
-//                throw new Exception("Receiver has no default account");
-//            }
-//            int receiverAccountId = defaultAccount.getId();
-//
-//            preparedStatement2.setBigDecimal(1, transaction.getAmount());
-//            preparedStatement2.setInt(2, receiverAccountId);
-//            int rowsAffected = preparedStatement2.executeUpdate();
-//
-//            addTransaction(transaction);
-//
-//            connection.commit();
-//
-//            return rowsAffected > 0;
-//        } catch (Exception e) {
-//            Connection connection = DatabaseConnection.getConnection();
-//            if (connection != null) {
-//                try {
-//                    System.err.print("Transaction is being rolled back");
-//                    connection.rollback();
-//                } catch (SQLException excep) {
-//                    excep.printStackTrace();
-//                }
-//            }
-//            throw new RuntimeException("Database operation failed", e);
-//        }
-//    }
 
 
     public List<Transaction> showAllTransactions(User user) {
@@ -140,11 +97,10 @@ public class TransactionRepository {
                 int id = resultSet.getInt("id");
                 Timestamp created = resultSet.getTimestamp("created");
                 BigDecimal amount = resultSet.getBigDecimal("amount");
-                String transactionType = resultSet.getString("transaction_type");
                 String description = resultSet.getString("description");
                 int senderAccountId = resultSet.getInt("sender_account_id");
                 int receiverAccountId = resultSet.getInt("receiver_account_id");
-                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+                transactionList.add(new Transaction(id, created, amount, description, senderAccountId, receiverAccountId));
             }
             return transactionList;
 
@@ -171,11 +127,10 @@ public class TransactionRepository {
                 int id = resultSet.getInt("id");
                 Timestamp created = resultSet.getTimestamp("created");
                 BigDecimal amount = resultSet.getBigDecimal("amount");
-                String transactionType = resultSet.getString("transaction_type");
                 String description = resultSet.getString("description");
                 int senderAccountId = resultSet.getInt("sender_account_id");
                 int receiverAccountId = resultSet.getInt("receiver_account_id");
-                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+                transactionList.add(new Transaction(id, created, amount, description, senderAccountId, receiverAccountId));
             }
             return transactionList;
 
