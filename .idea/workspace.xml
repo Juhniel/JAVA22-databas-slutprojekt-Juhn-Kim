@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="transactions storing and sending funds working">
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="removed transaction type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/model/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" afterDir="false" />
     </list>
@@ -98,7 +99,7 @@
       <workItem from="1685012990089" duration="8825000" />
       <workItem from="1685029612483" duration="24552000" />
       <workItem from="1685093819693" duration="46448000" />
-      <workItem from="1685345791944" duration="3499000" />
+      <workItem from="1685345791944" duration="10327000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -178,7 +179,13 @@
       <option name="presentableId" value="LOCAL−00013" />
       <updated>1685348514636</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL−00014" summary="removed transaction type">
+      <created>1685349427399</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1685349427399</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +204,7 @@
     <MESSAGE value="transaction" />
     <MESSAGE value="implemented new methods for users &amp; transactions" />
     <MESSAGE value="transactions storing and sending funds working" />
-    <option name="LAST_COMMIT_MESSAGE" value="transactions storing and sending funds working" />
+    <MESSAGE value="removed transaction type" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed transaction type" />
   </component>
 </project>

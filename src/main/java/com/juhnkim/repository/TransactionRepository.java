@@ -26,15 +26,18 @@ public class TransactionRepository {
         preparedStatement.setInt(4, transaction.getReceiverAccountId());
     }
 
-    public boolean addTransaction(Transaction transaction) {
-        String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
+    public boolean addTransaction(Transaction transaction, Account senderAccount) {
+        String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
+            System.out.println("SENDER ACCOUNT ID" + senderAccount.getId());
+            System.out.println("RECEIVER ACCOUNT ID" + transaction.getReceiverAccountId());
+
             preparedStatement.setBigDecimal(1, transaction.getAmount());
             preparedStatement.setString(2, transaction.getDescription());
-            preparedStatement.setInt(3, transaction.getSenderAccountId());
+            preparedStatement.setInt(3, senderAccount.getId());
             preparedStatement.setInt(4, transaction.getReceiverAccountId());
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -45,7 +48,7 @@ public class TransactionRepository {
         }
     }
 
-    public boolean transferFunds(Transaction transaction) {
+    public boolean transferFunds(Transaction transaction, Account senderAccount) {
         String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
 
@@ -57,18 +60,18 @@ public class TransactionRepository {
             preparedStatement1.setInt(2, transaction.getSenderAccountId());
             preparedStatement1.executeUpdate();
 
-            int receiverId = transaction.getReceiverAccountId();
-            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
-            if (defaultAccount == null) {
-                throw new Exception("Receiver has no default account");
-            }
-            int receiverAccountId = defaultAccount.getId();
+
+            Account defaultAccount = accountRepository.getDefaultAccountForUser(senderAccount.getUserId());
+            int receiverUserId = defaultAccount.getId();
+
+            System.out.println("RECEIVER USER ID" + transaction.getReceiverAccountId());
+
 
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
-            preparedStatement2.setInt(2, receiverAccountId);
+            preparedStatement2.setInt(2, receiverUserId);
             int rowsAffected = preparedStatement2.executeUpdate();
 
-            addTransaction(transaction);
+            addTransaction(transaction, senderAccount);
 
             return rowsAffected > 0;
 

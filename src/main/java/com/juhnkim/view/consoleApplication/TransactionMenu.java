@@ -109,8 +109,9 @@ public class TransactionMenu {
         System.out.println("Enter receivers phone number: ");
         String phone = scan.nextLine();
         User receiverUser = userRepository.getUserByPhone(phone);
+        Account receiverAccount = accountService.getDefaultAccountForUser(receiverUser.getId());
 
-        if (receiverUser == null) {
+        if (receiverAccount == null) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println(ConsoleColors.RED);
             System.out.println("             The phone number you entered \n does not match any user.  ");
@@ -118,8 +119,10 @@ public class TransactionMenu {
             System.out.println("--------------------------------------------------------------------");
             return;
         }
+        System.out.println("DU SKICKAR FRÅN: " + senderAccount.getId());
+        System.out.println("DU SKICKAR TILL " + receiverAccount.getId());
 
-        transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverUser.getId()), loggedInUser);
+        transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), loggedInUser);
     }
 
     public void handleShowAllTransactions(User loggedInUser) {

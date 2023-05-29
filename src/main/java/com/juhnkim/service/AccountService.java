@@ -14,6 +14,10 @@ public class AccountService {
     }
 
 
+    public Account getDefaultAccountForUser(int id){
+
+        return accountRepository.getDefaultAccountForUser(id);
+    }
 
     public List<Account> getAllUserAccountsById(int id) {
         return accountRepository.getAllUserAccountsById(id);
