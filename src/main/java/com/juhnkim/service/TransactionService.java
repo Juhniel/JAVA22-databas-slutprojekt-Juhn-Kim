@@ -1,5 +1,6 @@
 package com.juhnkim.service;
 
+import com.juhnkim.exception.InsufficientFundsException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
@@ -21,26 +22,19 @@ public class TransactionService {
         this.accountService = accountService;
     }
 
-    public boolean transferFunds(Transaction transaction, User loggedInUser) {
+    public boolean transferFunds(Transaction transaction, Account senderAccount) {
 
-        // Get the sender's default account
-        Account senderAccount = accountService.getDefaultAccountForUser(loggedInUser.getId());
+//        Account senderAccount = accountService.getDefaultAccountForUser(loggedInUser.getId());
 
-        if (senderAccount == null) {
-            throw new RuntimeException("Sender account not found");
-        }
-
+//        if (loggedInUser == null) {
+//            throw new RuntimeException("Sender account not found");
+//        }
 
         BigDecimal transactionAmount = transaction.getAmount().setScale(2, RoundingMode.HALF_UP);
 
         // Check if the sender has enough funds
         if (senderAccount.getBalance().compareTo(transactionAmount) < 0) {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.print(ConsoleColors.RED);
-            System.out.println("                Insufficient funds on your account                  ");
-            System.out.print(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
-            return false;
+            throw new InsufficientFundsException(senderAccount.getBalance(), transactionAmount);
         }
 
         // If the sender has enough funds, execute the transaction

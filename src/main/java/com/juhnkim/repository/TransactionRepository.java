@@ -19,13 +19,6 @@ public class TransactionRepository {
         this.accountRepository = accountRepository;
     }
 
-    private void setPreparedStatementValues(PreparedStatement preparedStatement, Transaction transaction) throws SQLException {
-        preparedStatement.setBigDecimal(1, transaction.getAmount());
-        preparedStatement.setString(2, transaction.getDescription());
-        preparedStatement.setInt(3, transaction.getSenderAccountId());
-        preparedStatement.setInt(4, transaction.getReceiverAccountId());
-    }
-
     public boolean addTransaction(Transaction transaction, Account senderAccount) {
         String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?)";
 
@@ -61,12 +54,8 @@ public class TransactionRepository {
             preparedStatement1.setInt(2, transaction.getSenderAccountId());
             preparedStatement1.executeUpdate();
 
-
             Account defaultAccount = accountRepository.getDefaultAccountForUser(senderAccount.getUserId());
             int receiverUserId = defaultAccount.getId();
-
-            System.out.println("RECEIVER USER ID" + transaction.getReceiverAccountId());
-
 
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
             preparedStatement2.setInt(2, receiverUserId);

@@ -13,7 +13,6 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-
     public Account getDefaultAccountForUser(int id){
 
         return accountRepository.getDefaultAccountForUser(id);

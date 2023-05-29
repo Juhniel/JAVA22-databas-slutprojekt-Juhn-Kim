@@ -1,5 +1,6 @@
 package com.juhnkim.view.consoleApplication;
 
+import com.juhnkim.exception.InsufficientFundsException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
@@ -117,10 +118,16 @@ public class TransactionMenu {
             System.out.println("--------------------------------------------------------------------");
             return;
         }
-        System.out.println("DU SKICKAR FRÅN: " + senderAccount.getId());
-        System.out.println("DU SKICKAR TILL " + receiverAccount.getId());
 
-        transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), loggedInUser);
+        try {
+            transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), senderAccount);
+        } catch (InsufficientFundsException e) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            System.out.println(e.getMessage());
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+        }
     }
 
     public void handleShowAllTransactions(User loggedInUser) {
