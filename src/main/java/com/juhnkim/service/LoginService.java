@@ -26,7 +26,6 @@ public class LoginService {
             return null;
         }
 
-
         BCrypt.Result passwordMatch = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
         if (passwordMatch.verified) {
             setUserLogged(true);

@@ -40,6 +40,8 @@ public class AccountService {
     public boolean deleteBankAccount(Account userAccounts) {
 
         // Kolla så att default account inte går att deletas om andra accounts finns
+
+
         return accountRepository.deleteBankAccount(userAccounts);
     }
 

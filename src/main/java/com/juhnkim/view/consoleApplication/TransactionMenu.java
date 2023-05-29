@@ -19,9 +19,7 @@ public class TransactionMenu {
     private final UserRepository userRepository;
     private final AccountService accountService;
     private final TransactionService transactionService;
-
     private final Scanner scan;
-
 
     public TransactionMenu(UserRepository userRepository, AccountService accountService, TransactionService transactionService, Scanner scan) {
         this.userRepository = userRepository;

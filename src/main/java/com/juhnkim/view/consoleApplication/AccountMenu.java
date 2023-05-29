@@ -28,12 +28,18 @@ public class AccountMenu {
             System.out.println("                        6. Previous                                 ");
             System.out.println("--------------------------------------------------------------------");
 
-            userOption = scan.nextInt();
-            scan.nextLine();
-            handleAccountMenu(userOption, loggedInUser);
-
+            try {
+                userOption = Integer.parseInt(scan.nextLine());
+                handleAccountMenu(userOption, loggedInUser);
+            } catch (NumberFormatException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println("                Invalid input. Please enter a number.               ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                userOption = -1; // So the loop continues.
+            }
         } while (userOption != 6);
-
     }
 
     public void handleAccountMenu(int userOption, User loggedInUser) {
@@ -68,9 +74,9 @@ public class AccountMenu {
 
         for (Account userAccount : userAccounts) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("Account name: " + userAccount.getAccountName());
-            System.out.println("Account number: " + userAccount.getAccountNumber());
-            System.out.println("Balance: " + userAccount.getBalance());
+            System.out.println("            Account name: " + userAccount.getAccountName());
+            System.out.println("            Account number: " + userAccount.getAccountNumber());
+            System.out.println("            Balance: " + userAccount.getBalance());
             System.out.println("--------------------------------------------------------------------\n");
         }
     }
@@ -96,20 +102,19 @@ public class AccountMenu {
     }
 
     public void handleDeleteBankAccount(User loggedInUser) {
-
         List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 
         if (allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println(ConsoleColors.RED);
-            System.out.println("                  You don't have any accounts.                       ");
+            System.out.println("                      You don't have any accounts.                  ");
             System.out.println(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;
         }
 
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("Here are your accounts:");
+        System.out.println("                        Here are your accounts:                     ");
         int index = 1;
         for (Account account : allAccountsFromUser) {
             System.out.println(index + ". " + account.getAccountName() + " " + account.getAccountNumber());

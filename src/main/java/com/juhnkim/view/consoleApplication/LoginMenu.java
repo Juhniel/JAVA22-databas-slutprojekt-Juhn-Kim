@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class LoginMenu {
     private final LoginService loginService;
-    private User loggedInUser;
     private final Scanner scan;
     private final LoggedInMenu loggedInMenu;
 
@@ -39,29 +38,40 @@ public class LoginMenu {
             if(password.equalsIgnoreCase("exit")){
                 break;
             }
-            loggedInUser = loginService.handleLogin(ssn, password);
-            if (loggedInUser != null) {
-                System.out.println("--------------------------------------------------------------------");
-                System.out.print(ConsoleColors.GREEN);
-                System.out.println("                        Login successful!");
-                System.out.print(ConsoleColors.RESET);
-                System.out.println("--------------------------------------------------------------------");
-                loggedInMenu.displayLoggedInMenu(loggedInUser);
-            } else {
-                loginAttempts++;
-                System.out.println("--------------------------------------------------------------------");
-                System.out.print(ConsoleColors.RED);
-                if (loginAttempts < 4) {
-                    System.out.println("                    Login failed, try again!");
-                    System.out.print(ConsoleColors.RESET);
-                    System.out.println("--------------------------------------------------------------------");
-                } else {
-                    System.out.println("                       Try again later!");
-                    System.out.print(ConsoleColors.RESET);
-                    System.out.println("--------------------------------------------------------------------");
-                    break;
-                }
+            User loggedInUser = loginService.handleLogin(ssn, password);
+
+            loginAttempts = handleLoginResult(loggedInUser, loginAttempts);
+
+            if (loginAttempts == -1) {
+                break;
             }
         }
+    }
+
+    private int handleLoginResult(User loggedInUser, int loginAttempts) {
+        if (loggedInUser != null) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.GREEN);
+            System.out.println("                        Login successful!");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+            loggedInMenu.displayLoggedInMenu(loggedInUser);
+            return -1;
+        } else {
+            loginAttempts++;
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            if (loginAttempts < 4) {
+                System.out.println("                    Login failed, try again!                    ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+            } else {
+                System.out.println("                       Try again later!");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                return -1;
+            }
+        }
+        return loginAttempts;
     }
 }

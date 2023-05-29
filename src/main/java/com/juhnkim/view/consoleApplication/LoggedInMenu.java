@@ -38,8 +38,17 @@ public class LoggedInMenu {
             System.out.println("                        0. Log out                                  ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
-            userOption = Integer.parseInt(scan.nextLine());
-            handleLoggedInMenu(userOption, loggedInUser);
+            try {
+                userOption = Integer.parseInt(scan.nextLine());
+                handleLoggedInMenu(userOption, loggedInUser);
+            } catch (NumberFormatException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println("                Invalid input. Please enter a number.               ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                userOption = -1; // So the loop continues.
+            }
         } while (userOption != 0 && loginService.isUserLogged());
         System.out.println("                        Logging out..                             ");
     }
@@ -47,25 +56,10 @@ public class LoggedInMenu {
 
     public void handleLoggedInMenu(int userOption, User loggedInUser) {
         switch (userOption) {
-            case 1:
-                transactionMenu.displayTransactionMenu(loggedInUser);
-                break;
-            case 2:
-                accountMenu.displayAccountMenu(loggedInUser);
-                break;
-            case 3:
-                userMenu.displayUserMenu(loggedInUser);
-                break;
-            case 0:
-                loginService.setUserLogged(false);
-
-                break;
-            default:
-                System.out.println("--------------------------------------------------------------------");
-                System.out.print(ConsoleColors.RED);
-                System.out.println("                Invalid option. Please try again.");
-                System.out.print(ConsoleColors.RESET);
-                System.out.println("--------------------------------------------------------------------");
+            case 1 -> transactionMenu.displayTransactionMenu(loggedInUser);
+            case 2 -> accountMenu.displayAccountMenu(loggedInUser);
+            case 3 -> userMenu.displayUserMenu(loggedInUser);
+            case 0 -> loginService.setUserLogged(false);
         }
     }
 }

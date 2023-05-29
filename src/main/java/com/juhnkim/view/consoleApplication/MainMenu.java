@@ -35,9 +35,18 @@ public class MainMenu {
             System.out.println("                        0. Exit                                     ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
-            userOption = scan.nextInt();
-            scan.nextLine();
-            handleMainMenu(userOption);
+            String userInput = scan.nextLine();
+            try {
+                userOption = Integer.parseInt(userInput);
+                handleMainMenu(userOption);
+            } catch (NumberFormatException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println("                Invalid option. Please enter a number.              ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                userOption = -1; // Invalid option
+            }
         } while (userOption != 0);
         System.out.println("--------------------------------------------------------------------");
         System.out.println("                    Exiting application...                          ");
@@ -92,17 +101,13 @@ public class MainMenu {
 
         String hashedPassword = userService.validateAndHashPassword(password);
 
+        // Sätt addUser som boolean istället eller skapa en seperat metod för att för att kolla om värden är rätt innan allt utförs
         User registeredUser = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
         accountService.createBankAccount(registeredUser, "Default Account");
 
         System.out.println("--------------------------------------------------------------------");
-        if (registeredUser != null) {
-            System.out.print(ConsoleColors.GREEN);
-            System.out.println("                  User registered & account was opened!         ");
-        } else {
-            System.out.print(ConsoleColors.RED);
-            System.out.println("                   Failed to add user - Try again later         ");
-        }
+        System.out.print(ConsoleColors.GREEN);
+        System.out.println("                  User registered & account was opened!         ");
         System.out.print(ConsoleColors.RESET);
         System.out.println("--------------------------------------------------------------------");
     }
