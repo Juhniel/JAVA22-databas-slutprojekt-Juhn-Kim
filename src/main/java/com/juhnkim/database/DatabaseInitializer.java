@@ -1,7 +1,5 @@
 package com.juhnkim.database;
 
-import com.juhnkim.database.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -61,7 +59,6 @@ public class DatabaseInitializer {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "amount DECIMAL(19, 2), " +
-                    "transaction_type VARCHAR(20), " +
                     "description VARCHAR(255), " +
                     "sender_account_id INT, " +
                     "receiver_account_id INT, " +

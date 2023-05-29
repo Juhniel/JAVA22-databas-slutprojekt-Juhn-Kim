@@ -5,6 +5,7 @@ import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
 import com.juhnkim.repository.AccountRepository;
 import com.juhnkim.repository.TransactionRepository;
+import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,10 +20,6 @@ public class TransactionService {
     }
 
     public boolean transferFunds(Transaction transaction, User loggedInUser) {
-        // Get the sender's user ID
-        int senderUserId = transaction.getSenderAccountId();
-
-        System.out.println("Sender accountId:" + senderUserId);
 
         // Get the sender's default account
         Account senderAccount = accountRepository.getDefaultAccountForUser(loggedInUser.getId());
@@ -34,7 +31,11 @@ public class TransactionService {
 
         // Check if the sender has enough funds
         if (senderAccount.getBalance().compareTo(transaction.getAmount()) < 0) {
-            throw new IllegalArgumentException("Insufficient funds for the transaction.");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            System.out.println("                Insufficient funds on your account                  ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         }
 
         // If the sender has enough funds, execute the transaction

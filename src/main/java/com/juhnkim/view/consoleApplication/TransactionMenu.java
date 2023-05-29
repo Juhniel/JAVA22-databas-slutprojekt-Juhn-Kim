@@ -106,8 +106,6 @@ public class TransactionMenu {
         scan.nextLine();
         System.out.println("Enter message:");
         String description = scan.nextLine();
-        System.out.println("Enter transaction type:");
-        String transactionType = scan.nextLine();
         System.out.println("Enter receivers phone number: ");
         String phone = scan.nextLine();
         User receiverUser = userRepository.getUserByPhone(phone);
@@ -121,7 +119,7 @@ public class TransactionMenu {
             return;
         }
 
-        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverUser.getId()), loggedInUser);
+        transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverUser.getId()), loggedInUser);
     }
 
     public void handleShowAllTransactions(User loggedInUser) {
@@ -135,7 +133,6 @@ public class TransactionMenu {
             System.out.println("From: " + userRepository.getUserById(transaction.getSenderAccountId()).getName());
             System.out.println("To: " + userRepository.getUserById(transaction.getReceiverAccountId()).getName());
             System.out.println("Amount: " + transaction.getAmount());
-            System.out.println("Transaction type: " + transaction.getTransactionType());
         }
     }
 

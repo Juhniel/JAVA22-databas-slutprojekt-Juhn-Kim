@@ -21,23 +21,21 @@ public class TransactionRepository {
 
     private void setPreparedStatementValues(PreparedStatement preparedStatement, Transaction transaction) throws SQLException {
         preparedStatement.setBigDecimal(1, transaction.getAmount());
-        preparedStatement.setString(2, transaction.getTransactionType());
-        preparedStatement.setString(3, transaction.getDescription());
-        preparedStatement.setInt(4, transaction.getSenderAccountId());
-        preparedStatement.setInt(5, transaction.getReceiverAccountId());
+        preparedStatement.setString(2, transaction.getDescription());
+        preparedStatement.setInt(3, transaction.getSenderAccountId());
+        preparedStatement.setInt(4, transaction.getReceiverAccountId());
     }
 
     public boolean addTransaction(Transaction transaction) {
-        String query = "INSERT INTO transaction(amount, transaction_type, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setBigDecimal(1, transaction.getAmount());
-            preparedStatement.setString(2, transaction.getTransactionType());
-            preparedStatement.setString(3, transaction.getDescription());
-            preparedStatement.setInt(4, transaction.getSenderAccountId());
-            preparedStatement.setInt(5, transaction.getReceiverAccountId());
+            preparedStatement.setString(2, transaction.getDescription());
+            preparedStatement.setInt(3, transaction.getSenderAccountId());
+            preparedStatement.setInt(4, transaction.getReceiverAccountId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
@@ -96,11 +94,10 @@ public class TransactionRepository {
                 int id = resultSet.getInt("id");
                 Timestamp created = resultSet.getTimestamp("created");
                 BigDecimal amount = resultSet.getBigDecimal("amount");
-                String transactionType = resultSet.getString("transaction_type");
                 String description = resultSet.getString("description");
                 int senderAccountId = resultSet.getInt("sender_account_id");
                 int receiverAccountId = resultSet.getInt("receiver_account_id");
-                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+                transactionList.add(new Transaction(id, created, amount, description, senderAccountId, receiverAccountId));
             }
             return transactionList;
 
@@ -127,11 +124,10 @@ public class TransactionRepository {
                 int id = resultSet.getInt("id");
                 Timestamp created = resultSet.getTimestamp("created");
                 BigDecimal amount = resultSet.getBigDecimal("amount");
-                String transactionType = resultSet.getString("transaction_type");
                 String description = resultSet.getString("description");
                 int senderAccountId = resultSet.getInt("sender_account_id");
                 int receiverAccountId = resultSet.getInt("receiver_account_id");
-                transactionList.add(new Transaction(id, created, amount, transactionType, description, senderAccountId, receiverAccountId));
+                transactionList.add(new Transaction(id, created, amount, description, senderAccountId, receiverAccountId));
             }
             return transactionList;
 
