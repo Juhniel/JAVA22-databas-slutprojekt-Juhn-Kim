@@ -18,7 +18,9 @@ public class DatabaseInitializer {
                     "online BOOLEAN, " +
                     "phone VARCHAR(20), " +
                     "address VARCHAR(100), " +
-                    "password VARCHAR(255)" +
+                    "password VARCHAR(255)," +
+                    "is_deleted BOOLEAN DEFAULT FALSE," +
+                    "deleted_at TIMESTAMP" +
                     ")";
 
             int result = statement.executeUpdate(query);
@@ -40,6 +42,8 @@ public class DatabaseInitializer {
                     "balance DECIMAL(19, 2)," +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "is_default BOOLEAN DEFAULT FALSE," +
+                    "is_deleted BOOLEAN DEFAULT FALSE," +
+                    "deleted_at TIMESTAMP," +
                     "user_id INT, " +
                     "FOREIGN KEY (user_id) REFERENCES user(id))";
 

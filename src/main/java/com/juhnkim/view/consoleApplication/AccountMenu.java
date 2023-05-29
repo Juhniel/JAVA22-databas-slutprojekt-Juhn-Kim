@@ -118,6 +118,7 @@ public class AccountMenu {
         System.out.println("--------------------------------------------------------------------");
         System.out.println("Enter the number of the account you want to delete:");
         int accountIndex = scan.nextInt();
+        scan.nextLine();
         Account accountToDelete = allAccountsFromUser.get(accountIndex - 1);
 
         System.out.println("--------------------------------------------------------------------");
