@@ -18,14 +18,16 @@ public class TransactionService {
         this.accountRepository = accountRepository;
     }
 
-    public boolean transferFunds(Transaction transaction) {
+    public boolean transferFunds(Transaction transaction, User loggedInUser) {
         // Get the sender's user ID
         int senderUserId = transaction.getSenderAccountId();
 
         System.out.println("Sender accountId:" + senderUserId);
 
         // Get the sender's default account
-        Account senderAccount = accountRepository.getDefaultAccountForUser(senderUserId);
+        Account senderAccount = accountRepository.getDefaultAccountForUser(loggedInUser.getId());
+
+
         if (senderAccount == null) {
             throw new RuntimeException("Sender account not found");
         }
@@ -46,6 +48,4 @@ public class TransactionService {
     public List<Transaction> showTransactionsByDate(User loggedInUser, LocalDate date) {
         return transactionRepository.showTransactionsByDate(loggedInUser, date);
     }
-
-
 }

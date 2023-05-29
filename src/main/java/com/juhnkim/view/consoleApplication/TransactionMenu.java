@@ -121,7 +121,7 @@ public class TransactionMenu {
             return;
         }
 
-        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverUser.getId()));
+        transactionService.transferFunds(new Transaction(amount, transactionType, description, senderAccount.getId(), receiverUser.getId()), loggedInUser);
     }
 
     public void handleShowAllTransactions(User loggedInUser) {

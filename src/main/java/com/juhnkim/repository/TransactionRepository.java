@@ -79,50 +79,6 @@ public class TransactionRepository {
         }
     }
 
-//    public boolean transferFunds(Transaction transaction) {
-//        String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
-//        String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
-//
-//        try (Connection connection = DatabaseConnection.getConnection();
-//             PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
-//             PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
-//
-//            connection.setAutoCommit(false);
-//
-//            preparedStatement1.setBigDecimal(1, transaction.getAmount());
-//            preparedStatement1.setInt(2, transaction.getSenderAccountId());
-//            preparedStatement1.executeUpdate();
-//
-//            int receiverId = transaction.getReceiverAccountId();
-//            Account defaultAccount = accountRepository.getDefaultAccountForUser(receiverId);
-//            if (defaultAccount == null) {
-//                throw new Exception("Receiver has no default account");
-//            }
-//            int receiverAccountId = defaultAccount.getId();
-//
-//            preparedStatement2.setBigDecimal(1, transaction.getAmount());
-//            preparedStatement2.setInt(2, receiverAccountId);
-//            int rowsAffected = preparedStatement2.executeUpdate();
-//
-//            addTransaction(transaction);
-//
-//            connection.commit();
-//
-//            return rowsAffected > 0;
-//        } catch (Exception e) {
-//            Connection connection = DatabaseConnection.getConnection();
-//            if (connection != null) {
-//                try {
-//                    System.err.print("Transaction is being rolled back");
-//                    connection.rollback();
-//                } catch (SQLException excep) {
-//                    excep.printStackTrace();
-//                }
-//            }
-//            throw new RuntimeException("Database operation failed", e);
-//        }
-//    }
-
 
     public List<Transaction> showAllTransactions(User user) {
         String query = "SELECT * FROM transaction WHERE sender_account_id IN (SELECT id FROM account WHERE user_id = ?) OR receiver_account_id IN (SELECT id FROM account WHERE user_id = ?)";
