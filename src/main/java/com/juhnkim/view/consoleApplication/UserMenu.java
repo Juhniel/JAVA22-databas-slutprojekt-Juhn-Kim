@@ -21,16 +21,23 @@ public class UserMenu {
     }
 
     public void displayUserMenu(User loggedInUser) {
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        1. Show User information                    ");
-        System.out.println("                        2. Edit User information                    ");
-        System.out.println("                        3. Delete User                              ");
-        System.out.println("                        6. Previous                                 ");
-        System.out.println("--------------------------------------------------------------------");
-
-        int userOption = scan.nextInt();
-        scan.nextLine();
-        handleUserMenu(userOption, loggedInUser);
+        int userOption;
+        do {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        1. Show User information                    ");
+            System.out.println("                        2. Edit User information                    ");
+            System.out.println("                        3. Delete User                              ");
+            System.out.println("                        6. Previous                                 ");
+            System.out.println("--------------------------------------------------------------------");
+            try {
+                userOption = Integer.parseInt(scan.nextLine());
+                handleUserMenu(userOption, loggedInUser);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine(); // clear the invalid input
+                userOption = -1; // assign an invalid option to keep the loop running
+            }
+        } while (userOption != 6);
     }
 
     public void handleUserMenu(int userOption, User loggedInUser) {
@@ -75,7 +82,10 @@ public class UserMenu {
         String phone = scan.nextLine();
         System.out.println("Enter address: ");
         String address = scan.nextLine();
-        userService.updateUser(new User(loggedInUser.getId(), name, loggedInUser.getSsn(), email, false, phone, address, password));
+        boolean userUpdated = userService.updateUser(new User(loggedInUser.getId(), name, loggedInUser.getSsn(), email, false, phone, address, password));
+        if(userUpdated){
+            System.out.println("User was successfully updated!");
+        }
     }
 
     public void deleteExistingUser(User loggedInUser) {
@@ -92,13 +102,13 @@ public class UserMenu {
 
             boolean isUserDeleted = userService.deleteUser(loggedInUser);
 
-            if(isUserDeleted){
+            if (isUserDeleted) {
                 loginService.setUserLogged(false);
 
                 System.out.println("--------------------------------------------------------------------");
                 System.out.println(ConsoleColors.BLUE);
                 System.out.println("                Your account has been deleted!                      ");
-            }else{
+            } else {
                 System.out.println("--------------------------------------------------------------------");
                 System.out.println(ConsoleColors.RED);
                 System.out.println("                Something went wrong.. Please try again later       ");

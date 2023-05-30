@@ -1,5 +1,6 @@
 package com.juhnkim.service;
 
+import com.juhnkim.exception.DeleteDefaultAccountException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.User;
 import com.juhnkim.repository.AccountRepository;
@@ -20,7 +21,6 @@ public class AccountService {
 
     public List<Account> getAllUserAccountsById(int id) {
         return accountRepository.getAllUserAccountsById(id);
-
     }
 
     public boolean createBankAccount(User loggedInUser, String accountName) {
@@ -36,12 +36,11 @@ public class AccountService {
         return accountRepository.createBankAccount(loggedInUser, account);
     }
 
-    public boolean deleteBankAccount(Account userAccounts) {
-
-        // Kolla så att default account inte går att deletas om andra accounts finns
-
-
-        return accountRepository.deleteBankAccount(userAccounts);
+    public boolean deleteBankAccount(Account accountToDelete, List<Account> allAccountsFromUser) {
+        if(accountToDelete.isDefault() && allAccountsFromUser.size() < 2){
+            throw new DeleteDefaultAccountException();
+        }
+        return accountRepository.deleteBankAccount(accountToDelete);
     }
 
 }

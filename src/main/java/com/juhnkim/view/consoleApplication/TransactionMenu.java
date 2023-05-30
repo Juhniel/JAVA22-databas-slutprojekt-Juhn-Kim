@@ -1,12 +1,14 @@
 package com.juhnkim.view.consoleApplication;
 
 import com.juhnkim.exception.InsufficientFundsException;
+import com.juhnkim.exception.SameUserTransferException;
+import com.juhnkim.exception.UserNotFoundException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
-import com.juhnkim.repository.UserRepository;
 import com.juhnkim.service.AccountService;
 import com.juhnkim.service.TransactionService;
+import com.juhnkim.service.UserService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.math.BigDecimal;
@@ -17,13 +19,13 @@ import java.util.Scanner;
 
 public class TransactionMenu {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final AccountService accountService;
     private final TransactionService transactionService;
     private final Scanner scan;
 
-    public TransactionMenu(UserRepository userRepository, AccountService accountService, TransactionService transactionService, Scanner scan) {
-        this.userRepository = userRepository;
+    public TransactionMenu(UserService userService, AccountService accountService, TransactionService transactionService, Scanner scan) {
+        this.userService = userService;
         this.accountService = accountService;
         this.transactionService = transactionService;
         this.scan = scan;
@@ -39,9 +41,19 @@ public class TransactionMenu {
             System.out.println("                        6. Previous                                 ");
             System.out.println("--------------------------------------------------------------------");
 
-            userOption = scan.nextInt();
-            scan.nextLine();
-            handleTransactionMenu(userOption, loggedInUser);
+            try {
+                userOption = Integer.parseInt(scan.nextLine());
+                handleTransactionMenu(userOption, loggedInUser);
+            } catch (NumberFormatException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println("                Invalid option. Please enter a number.              ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                scan.nextLine();
+                userOption = -1;
+            }
+
         } while (userOption != 6);
     }
 
@@ -66,7 +78,7 @@ public class TransactionMenu {
     public void handleTransferFunds(User loggedInUser) {
         List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 
-        if(allAccountsFromUser.isEmpty()) {
+        if (allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println(ConsoleColors.RED);
             System.out.println("                  You don't have any accounts.                       ");
@@ -77,7 +89,7 @@ public class TransactionMenu {
 
         System.out.println("Here are your accounts:");
         int i = 1;
-        for(Account account : allAccountsFromUser) {
+        for (Account account : allAccountsFromUser) {
             System.out.println("--------------------------------------------------------------------");
             System.out.println("Account " + i);
             System.out.println("Account name: " + account.getAccountName());
@@ -87,16 +99,16 @@ public class TransactionMenu {
         }
 
         int accountIndex = -1;
-        while(accountIndex < 1 || accountIndex > allAccountsFromUser.size()) {
+        while (accountIndex < 1 || accountIndex > allAccountsFromUser.size()) {
             System.out.println("Select the number corresponding to the account:");
             try {
                 accountIndex = scan.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scan.nextLine(); // clear the invalid input
+                scan.nextLine();
             }
         }
-        scan.nextLine(); // clear the line
+        scan.nextLine();
 
         Account senderAccount = allAccountsFromUser.get(accountIndex - 1);
 
@@ -107,17 +119,21 @@ public class TransactionMenu {
         String description = scan.nextLine();
         System.out.println("Enter receivers phone number: ");
         String phone = scan.nextLine();
-        User receiverUser = userRepository.getUserByPhone(phone);
-        Account receiverAccount = accountService.getDefaultAccountForUser(receiverUser.getId());
 
-        if (receiverAccount == null) {
+        User receiverUser;
+        try {
+            receiverUser = userService.getUserByPhone(phone, loggedInUser);
+        } catch (UserNotFoundException | SameUserTransferException e) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
-            System.out.println("             The phone number you entered \n does not match any user.  ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RED);
+            System.out.println(e.getMessage());
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;
         }
+
+        Account receiverAccount = accountService.getDefaultAccountForUser(receiverUser.getId());
+
 
         try {
             transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), senderAccount);

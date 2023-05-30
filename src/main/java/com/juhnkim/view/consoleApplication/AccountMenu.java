@@ -32,11 +32,7 @@ public class AccountMenu {
                 userOption = Integer.parseInt(scan.nextLine());
                 handleAccountMenu(userOption, loggedInUser);
             } catch (NumberFormatException e) {
-                System.out.println("--------------------------------------------------------------------");
-                System.out.print(ConsoleColors.RED);
-                System.out.println("                Invalid input. Please enter a number.               ");
-                System.out.print(ConsoleColors.RESET);
-                System.out.println("--------------------------------------------------------------------");
+               e.getMessage();
                 userOption = -1; // So the loop continues.
             }
         } while (userOption != 6);
@@ -137,7 +133,7 @@ public class AccountMenu {
 
         boolean isDeleted = false;
         if (userOption.equalsIgnoreCase("y")) {
-            isDeleted = accountService.deleteBankAccount(accountToDelete);
+            isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
         }
 
         if (isDeleted) {

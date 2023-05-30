@@ -1,5 +1,7 @@
 package com.juhnkim.service;
 
+import com.juhnkim.exception.SameUserTransferException;
+import com.juhnkim.exception.UserNotFoundException;
 import com.juhnkim.model.User;
 import com.juhnkim.repository.UserRepository;
 
@@ -27,6 +29,19 @@ public class UserService {
 
     public User getUserById(int id) {
         return userRepository.getUserById(id);
+    }
+
+    public User getUserByPhone(String phone, User loggedInUser) {
+        User user = userRepository.getUserByPhone(phone);
+
+        if (user == null) {
+            throw new UserNotFoundException(phone);
+        }
+
+        if (phone.equals(loggedInUser.getPhone())) {
+            throw new SameUserTransferException();
+        }
+        return user;
     }
 
     public User getUserBySsn(String ssn) {

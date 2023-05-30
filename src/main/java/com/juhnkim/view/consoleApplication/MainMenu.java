@@ -30,9 +30,9 @@ public class MainMenu {
             System.out.print(ConsoleColors.BLUE);
             System.out.println("                            ** WELCOME! **                          ");
             System.out.println("                    What would you like to do today?                ");
-            System.out.println("                        1. Register new account                     ");
-            System.out.println("                        2. Login                                    ");
-            System.out.println("                        0. Exit                                     ");
+            System.out.println("                          1. Register new account                   ");
+            System.out.println("                          2. Login                                  ");
+            System.out.println("                          0. Exit                                   ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             String userInput = scan.nextLine();
