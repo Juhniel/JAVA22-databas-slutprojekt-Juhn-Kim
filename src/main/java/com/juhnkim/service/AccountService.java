@@ -37,7 +37,7 @@ public class AccountService {
     }
 
     public boolean deleteBankAccount(Account accountToDelete, List<Account> allAccountsFromUser) {
-        if(accountToDelete.isDefault() && allAccountsFromUser.size() < 2){
+        if(accountToDelete.isDefault() && allAccountsFromUser.size() < 1){
             throw new DeleteDefaultAccountException();
         }
         return accountRepository.deleteBankAccount(accountToDelete);

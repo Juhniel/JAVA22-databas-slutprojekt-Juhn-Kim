@@ -26,24 +26,27 @@ public class UserService {
 
     private String validateSSN(User user) {
         String ssn = user.getSsn().trim();
-        if (ssn.length() < 10 || ssn.length() > 13) {
-            throw new IllegalArgumentException("Invalid Social security number");
+
+        if(userRepository.getUserBySsn(ssn) != null) {
+            throw new IllegalArgumentException("User already exists");
+        }
+
+        if (ssn.length() < 12 || ssn.length() > 13) {
+            throw new IllegalArgumentException("Invalid Social security number - Enter Format: 19891120-5569");
         }
 
         if(ssn.contains("-")){
-            ssn.replace("-", "");
+            ssn = ssn.replace("-", "");
         }
+        System.out.println(ssn);
 
       return ssn;
     }
 
     public User addUser(User user) {
-
-
         String phone = user.getPhone().trim();
         String address = user.getAddress().trim();
 
-        // If all validation checks pass, update the user object and add it to the database
         user.setSsn(validateSSN(user));
         user.setEmail(validateEmail(user));
         user.setPhone(phone);
@@ -98,6 +101,9 @@ public class UserService {
 
         // check if password contains at least one special character
         if (!password.matches(".*\\p{Punct}.*")) {
+            return false;
+        }
+        if (!password.matches(".*[A-Z].*")) {
             return false;
         }
 

@@ -1,5 +1,6 @@
 package com.juhnkim.view.consoleApplication;
 
+import com.juhnkim.exception.DeleteDefaultAccountException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.User;
 import com.juhnkim.service.AccountService;
@@ -31,7 +32,7 @@ public class AccountMenu {
                 userOption = Integer.parseInt(scan.nextLine());
                 handleAccountMenu(userOption, loggedInUser);
             } catch (NumberFormatException e) {
-               e.getMessage();
+                e.getMessage();
                 userOption = -1;
             }
         } while (userOption != 6);
@@ -132,21 +133,25 @@ public class AccountMenu {
 
         boolean isDeleted = false;
         if (userOption.equalsIgnoreCase("y")) {
-            isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
-        }
+            try {
+                isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
+            } catch (DeleteDefaultAccountException e) {
+                System.out.println(e.getMessage());
+            }
 
-        if (isDeleted) {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.GREEN);
-            System.out.println("                Your account has been deleted!                      ");
-            System.out.println(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
-        } else {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
-            System.out.println("         Failed to delete the account. Please try again later.      ");
-            System.out.println(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
+            if (isDeleted) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println(ConsoleColors.GREEN);
+                System.out.println("                Your account has been deleted!                      ");
+                System.out.println(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+            } else {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println(ConsoleColors.RED);
+                System.out.println("         Failed to delete the account. Please try again later.      ");
+                System.out.println(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+            }
         }
     }
 }

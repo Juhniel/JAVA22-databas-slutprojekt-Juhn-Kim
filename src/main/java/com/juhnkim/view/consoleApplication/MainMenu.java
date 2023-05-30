@@ -74,47 +74,52 @@ public class MainMenu {
 
 
     public void createNewUserAccount() {
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter name: ");
-        System.out.println("--------------------------------------------------------------------");
-        String name = scan.nextLine();
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                  Enter your social security number:                ");
-        System.out.println("--------------------------------------------------------------------");
-        String ssn = scan.nextLine();
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter email: ");
-        System.out.println("--------------------------------------------------------------------");
-        String email = scan.nextLine();
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter password: ");
-        System.out.println("--------------------------------------------------------------------");
-        String password = scan.nextLine();
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter phone: ");
-        System.out.println("--------------------------------------------------------------------");
-        String phone = scan.nextLine();
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("                        Enter address: ");
-        System.out.println("--------------------------------------------------------------------");
-        String address = scan.nextLine();
+        while (true) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        Enter name: ");
+            System.out.println("--------------------------------------------------------------------");
+            String name = scan.nextLine();
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                  Enter your social security number:                ");
+            System.out.println("--------------------------------------------------------------------");
+            String ssn = scan.nextLine();
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        Enter email: ");
+            System.out.println("--------------------------------------------------------------------");
+            String email = scan.nextLine();
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Make sure your password contains 1 special letter & 1 uppercase letter");
+            System.out.println("                        Enter password: ");
+            System.out.println("--------------------------------------------------------------------");
+            String password = scan.nextLine();
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        Enter phone: ");
+            System.out.println("--------------------------------------------------------------------");
+            String phone = scan.nextLine();
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        Enter address: ");
+            System.out.println("--------------------------------------------------------------------");
+            String address = scan.nextLine();
 
-        String hashedPassword = userService.validateAndHashPassword(password);
-        User registeredUser;
-        try {
-            registeredUser = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
-        }catch(IllegalArgumentException e){
-            e.getMessage();
-            return;
+            try {
+                String hashedPassword = userService.validateAndHashPassword(password);
+                User registeredUser = userService.addUser(new User(ssn, name, email, false, phone, address, hashedPassword));
+                accountService.createBankAccount(registeredUser, "Default Account");
+
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.GREEN);
+                System.out.println("                  User registered & account was opened!         ");
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println("                    Error: " + e.getMessage());
+                System.out.print(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
+            }
         }
-
-        accountService.createBankAccount(registeredUser, "Default Account");
-
-        System.out.println("--------------------------------------------------------------------");
-        System.out.print(ConsoleColors.GREEN);
-        System.out.println("                  User registered & account was opened!         ");
-        System.out.print(ConsoleColors.RESET);
-        System.out.println("--------------------------------------------------------------------");
     }
 }
 

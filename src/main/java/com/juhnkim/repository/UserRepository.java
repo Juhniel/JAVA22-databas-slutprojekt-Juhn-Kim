@@ -48,6 +48,10 @@ public class UserRepository {
     public User getUserBySsn(String ssn){
         String query = "SELECT * FROM user WHERE ssn = ?";
 
+        if(ssn.contains("-")){
+            ssn = ssn.replace("-", "");
+        }
+
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 

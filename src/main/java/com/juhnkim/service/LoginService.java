@@ -20,6 +20,10 @@ public class LoginService {
     }
 
     public User handleLogin(String ssn, String password) {
+        if(ssn.contains("-")){
+            ssn = ssn.replace("-", "");
+        }
+
         User user = userService.getUserBySsn(ssn);
 
         if (user == null) {
