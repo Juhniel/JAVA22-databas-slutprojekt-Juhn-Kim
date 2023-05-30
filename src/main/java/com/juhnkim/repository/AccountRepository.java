@@ -77,7 +77,6 @@ public class AccountRepository {
             String accountNumber = UUID.randomUUID().toString();
             account.setAccountNumber(accountNumber);
 
-            // ersätt med metod
             preparedStatement.setString(1, account.getAccountName());
             preparedStatement.setString(2, account.getAccountNumber());
             preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));

@@ -45,7 +45,7 @@ public class MainMenu {
                 System.out.println("                Invalid option. Please enter a number.              ");
                 System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
-                userOption = -1; // Invalid option
+                userOption = -1;
             }
         } while (userOption != 0);
         System.out.println("--------------------------------------------------------------------");
@@ -100,9 +100,14 @@ public class MainMenu {
         String address = scan.nextLine();
 
         String hashedPassword = userService.validateAndHashPassword(password);
+        User registeredUser;
+        try {
+            registeredUser = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
+        }catch(IllegalArgumentException e){
+            e.getMessage();
+            return;
+        }
 
-        // Sätt addUser som boolean istället eller skapa en seperat metod för att för att kolla om värden är rätt innan allt utförs
-        User registeredUser = userService.addUser(new User(name, ssn, email, false, phone, address, hashedPassword));
         accountService.createBankAccount(registeredUser, "Default Account");
 
         System.out.println("--------------------------------------------------------------------");

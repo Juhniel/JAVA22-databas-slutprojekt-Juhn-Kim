@@ -23,8 +23,8 @@ public class DatabaseInitializer {
                     "deleted_at TIMESTAMP" +
                     ")";
 
-            int result = statement.executeUpdate(query);
-            System.out.println("Results: " + result);
+            statement.executeUpdate(query);
+            System.out.println("user table successfully created!");
 
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
@@ -47,8 +47,8 @@ public class DatabaseInitializer {
                     "user_id INT, " +
                     "FOREIGN KEY (user_id) REFERENCES user(id))";
 
-            int result = statement.executeUpdate(query);
-            System.out.println("Results: " + result);
+            statement.executeUpdate(query);
+            System.out.println("account table successfully created!");
 
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
@@ -69,8 +69,8 @@ public class DatabaseInitializer {
                     "FOREIGN KEY (sender_account_id) REFERENCES account(id), " +
                     "FOREIGN KEY (receiver_account_id) REFERENCES account(id))";
 
-            int result = statement.executeUpdate(query);
-            System.out.println("Results: " + result);
+            statement.executeUpdate(query);
+            System.out.println("transaction table successfully created!");
 
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);

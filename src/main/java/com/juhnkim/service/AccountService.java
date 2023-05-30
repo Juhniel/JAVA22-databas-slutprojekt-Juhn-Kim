@@ -15,7 +15,6 @@ public class AccountService {
     }
 
     public Account getDefaultAccountForUser(int id){
-
         return accountRepository.getDefaultAccountForUser(id);
     }
 
@@ -28,6 +27,7 @@ public class AccountService {
         account.setAccountName(accountName);
         List<Account> allAccountsFromUser = accountRepository.getAllUserAccountsById(loggedInUser.getId());
         boolean hasDefaultAccount = allAccountsFromUser.stream().anyMatch(Account::isDefault);
+
         if (!hasDefaultAccount) {
             account.setDefault(true);
         } else {

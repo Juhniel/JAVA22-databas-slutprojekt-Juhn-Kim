@@ -15,7 +15,40 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
+
+    private String validateEmail(User user) {
+        String email = user.getEmail().trim();
+        if(!email.contains("@") && !email.contains(".")){
+            throw new IllegalArgumentException("Invalid email");
+        }
+        return email;
+    }
+
+    private String validateSSN(User user) {
+        String ssn = user.getSsn().trim();
+        if (ssn.length() < 10 || ssn.length() > 13) {
+            throw new IllegalArgumentException("Invalid Social security number");
+        }
+
+        if(ssn.contains("-")){
+            ssn.replace("-", "");
+        }
+
+      return ssn;
+    }
+
     public User addUser(User user) {
+
+
+        String phone = user.getPhone().trim();
+        String address = user.getAddress().trim();
+
+        // If all validation checks pass, update the user object and add it to the database
+        user.setSsn(validateSSN(user));
+        user.setEmail(validateEmail(user));
+        user.setPhone(phone);
+        user.setAddress(address);
+
         return userRepository.addUser(user);
     }
 
@@ -59,7 +92,19 @@ public class UserService {
     }
 
     private boolean validatePassword(String password) {
-        // Validate the password according to your rules. Here is a simple example
-        return password != null && password.length() >= 4;
+        if (password == null || password.trim().length() <= 5) {
+            return false;
+        }
+
+        // check if password contains at least one special character
+        if (!password.matches(".*\\p{Punct}.*")) {
+            return false;
+        }
+
+        // check if password contains any whitespace
+        if (password.contains(" ")) {
+            return false;
+        }
+        return true;
     }
 }

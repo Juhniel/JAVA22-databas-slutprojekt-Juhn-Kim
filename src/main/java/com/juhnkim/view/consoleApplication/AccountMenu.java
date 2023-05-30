@@ -12,7 +12,6 @@ public class AccountMenu {
     private final AccountService accountService;
     private final Scanner scan;
 
-
     public AccountMenu(AccountService accountService, Scanner scan) {
         this.accountService = accountService;
         this.scan = scan;
@@ -33,7 +32,7 @@ public class AccountMenu {
                 handleAccountMenu(userOption, loggedInUser);
             } catch (NumberFormatException e) {
                e.getMessage();
-                userOption = -1; // So the loop continues.
+                userOption = -1;
             }
         } while (userOption != 6);
     }

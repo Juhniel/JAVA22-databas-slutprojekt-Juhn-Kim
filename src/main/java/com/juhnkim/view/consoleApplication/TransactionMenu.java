@@ -112,9 +112,18 @@ public class TransactionMenu {
 
         Account senderAccount = allAccountsFromUser.get(accountIndex - 1);
 
-        System.out.println("Enter amount:");
-        BigDecimal amount = scan.nextBigDecimal();
-        scan.nextLine();
+        BigDecimal amount;
+        while (true) {
+            System.out.println("Enter amount:");
+            try {
+                amount = scan.nextBigDecimal();
+                scan.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine();
+            }
+        }
         System.out.println("Enter message:");
         String description = scan.nextLine();
         System.out.println("Enter receivers phone number: ");
@@ -148,14 +157,16 @@ public class TransactionMenu {
 
     public void handleShowAllTransactions(User loggedInUser) {
         List<Transaction> transactions = transactionService.showAllTransactions(loggedInUser);
-        if(transactions.isEmpty()){
+        if (transactions.isEmpty()) {
             System.out.println("You have no transactions.");
             return;
         }
         for (Transaction transaction : transactions) {
             System.out.println("Date: " + transaction.getCreated());
-            System.out.println("From Sender id: " + transaction.getSenderAccountId());
-            System.out.println("To Receiver id: " + transaction.getReceiverAccountId());
+            System.out.println("From:");
+            System.out.println("Account id: " + transaction.getSenderAccountId());
+            System.out.println("To:");
+            System.out.println("Account id: " + transaction.getReceiverAccountId());
             System.out.println("Amount: " + transaction.getAmount());
         }
     }
@@ -165,7 +176,7 @@ public class TransactionMenu {
         String dateInput = scan.nextLine();
         LocalDate date = LocalDate.parse(dateInput);
         List<Transaction> transactions = transactionService.showTransactionsByDate(loggedInUser, date);
-        if(transactions.isEmpty()){
+        if (transactions.isEmpty()) {
             System.out.println("You have no transactions for this date.");
             return;
         }

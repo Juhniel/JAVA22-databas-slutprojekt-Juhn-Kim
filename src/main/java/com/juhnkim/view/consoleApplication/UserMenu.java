@@ -34,8 +34,8 @@ public class UserMenu {
                 handleUserMenu(userOption, loggedInUser);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scan.nextLine(); // clear the invalid input
-                userOption = -1; // assign an invalid option to keep the loop running
+                scan.nextLine();
+                userOption = -1;
             }
         } while (userOption != 6);
     }
@@ -83,7 +83,7 @@ public class UserMenu {
         System.out.println("Enter address: ");
         String address = scan.nextLine();
         boolean userUpdated = userService.updateUser(new User(loggedInUser.getId(), name, loggedInUser.getSsn(), email, false, phone, address, password));
-        if(userUpdated){
+        if (userUpdated) {
             System.out.println("User was successfully updated!");
         }
     }
