@@ -15,17 +15,46 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
+    public String validateReceiverPhone(String phone) {
+        phone = phone.trim();
 
-    private String validateEmail(User user) {
-        String email = user.getEmail().trim();
+        if(phone.contains("-")){
+            phone = phone.replace("-", "");
+        }
+
+        if(userRepository.getUserByPhone(phone) == null) {
+            throw new IllegalArgumentException("User with that phone number does not exist!");
+        }
+        return phone;
+    }
+
+    public String validatePhone(String phone) {
+        phone = phone.trim();
+
+        if(phone.length() < 10 || phone.length() > 11) {
+            throw new IllegalArgumentException("Not a valid Swedish cellphone number");
+        }
+
+        if(phone.contains("-")){
+            phone = phone.replace("-", "");
+        }
+
+        if(userRepository.getUserByPhone(phone) != null) {
+            throw new IllegalArgumentException("User with that phone number already exists");
+        }
+        return phone;
+    }
+
+    private String validateEmail(String email) {
+        email = email.trim();
         if(!email.contains("@") && !email.contains(".")){
             throw new IllegalArgumentException("Invalid email");
         }
         return email;
     }
 
-    private String validateSSN(User user) {
-        String ssn = user.getSsn().trim();
+    private String validateSSN(String ssn) {
+        ssn = ssn.trim();
 
         if(userRepository.getUserBySsn(ssn) != null) {
             throw new IllegalArgumentException("User already exists");
@@ -38,18 +67,15 @@ public class UserService {
         if(ssn.contains("-")){
             ssn = ssn.replace("-", "");
         }
-        System.out.println(ssn);
-
       return ssn;
     }
 
     public User addUser(User user) {
-        String phone = user.getPhone().trim();
         String address = user.getAddress().trim();
 
-        user.setSsn(validateSSN(user));
-        user.setEmail(validateEmail(user));
-        user.setPhone(phone);
+        user.setSsn(validateSSN(user.getSsn()));
+        user.setEmail(validateEmail(user.getEmail()));
+        user.setPhone(validatePhone(user.getPhone()));
         user.setAddress(address);
 
         return userRepository.addUser(user);

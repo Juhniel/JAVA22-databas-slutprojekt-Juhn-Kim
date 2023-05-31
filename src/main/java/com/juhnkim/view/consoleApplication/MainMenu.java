@@ -115,7 +115,7 @@ public class MainMenu {
             } catch (IllegalArgumentException e) {
                 System.out.println("--------------------------------------------------------------------");
                 System.out.print(ConsoleColors.RED);
-                System.out.println("                    Error: " + e.getMessage());
+                System.out.println("Error: " + e.getMessage());
                 System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
             }

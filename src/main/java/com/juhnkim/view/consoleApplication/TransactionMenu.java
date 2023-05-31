@@ -128,10 +128,10 @@ public class TransactionMenu {
         String description = scan.nextLine();
         System.out.println("Enter receivers phone number: ");
         String phone = scan.nextLine();
-
         User receiverUser;
         try {
-            receiverUser = userService.getUserByPhone(phone, loggedInUser);
+            String validatedPhone = userService.validateReceiverPhone(phone);
+            receiverUser = userService.getUserByPhone(validatedPhone, loggedInUser);
         } catch (UserNotFoundException | SameUserTransferException e) {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.RED);
@@ -162,12 +162,12 @@ public class TransactionMenu {
             return;
         }
         for (Transaction transaction : transactions) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.PURPLE);
             System.out.println("Date: " + transaction.getCreated());
-            System.out.println("From:");
-            System.out.println("Account id: " + transaction.getSenderAccountId());
-            System.out.println("To:");
-            System.out.println("Account id: " + transaction.getReceiverAccountId());
+            System.out.println("From accountId: " + transaction.getSenderAccountId() + "\nTo accountId: " + transaction.getReceiverAccountId());
             System.out.println("Amount: " + transaction.getAmount());
+            System.out.print(ConsoleColors.RESET);
         }
     }
 

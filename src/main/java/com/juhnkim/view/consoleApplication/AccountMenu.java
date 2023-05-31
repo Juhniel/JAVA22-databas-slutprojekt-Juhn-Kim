@@ -136,6 +136,8 @@ public class AccountMenu {
             try {
                 isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
             } catch (DeleteDefaultAccountException e) {
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println(ConsoleColors.RED);
                 System.out.println(e.getMessage());
             }
 
@@ -146,7 +148,6 @@ public class AccountMenu {
                 System.out.println(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
             } else {
-                System.out.println("--------------------------------------------------------------------");
                 System.out.println(ConsoleColors.RED);
                 System.out.println("         Failed to delete the account. Please try again later.      ");
                 System.out.println(ConsoleColors.RESET);

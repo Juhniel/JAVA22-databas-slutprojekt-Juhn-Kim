@@ -15,11 +15,10 @@ import java.util.List;
 
 public class TransactionService {
     private final TransactionRepository transactionRepository;
-    private final AccountService accountService;
 
-    public TransactionService(TransactionRepository transactionRepository, AccountService accountService) {
+
+    public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.accountService = accountService;
     }
 
     public boolean transferFunds(Transaction transaction, Account senderAccount) {

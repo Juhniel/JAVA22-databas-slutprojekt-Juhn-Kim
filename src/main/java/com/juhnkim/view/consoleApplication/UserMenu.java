@@ -91,7 +91,8 @@ public class UserMenu {
     public void deleteExistingUser(User loggedInUser) {
         System.out.println("--------------------------------------------------------------------");
         System.out.println(ConsoleColors.BLUE);
-        System.out.println("        All your bank accounts will be closed and your account\n will permanently be deleted.");
+        System.out.println("        All your bank accounts will be closed and your account      ");
+        System.out.println("                    will permanently be deleted.                    ");
         System.out.println("        Are you still sure you want to delete your account?         ");
         System.out.println("                                y/n:                                ");
         System.out.println(ConsoleColors.RESET);

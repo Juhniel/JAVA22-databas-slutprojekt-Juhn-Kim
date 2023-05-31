@@ -16,7 +16,7 @@ import java.util.UUID;
 public class AccountRepository {
 
     public List<Account> getAllUserAccountsById(int id) {
-        String query = "SELECT * FROM account WHERE user_id = ? AND is_deleted = FALSE";
+        String query = "SELECT * FROM account WHERE user_id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -92,7 +92,7 @@ public class AccountRepository {
     }
 
     public boolean deleteBankAccount(Account account) {
-        String query = "UPDATE account SET account_name = 'Deleted Account Name', is_deleted = TRUE, account_number = 'Deleted Account Number', balance = 0, deleted_at = NOW() WHERE id = ?";
+        String query = "DELETE account FROM account WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
