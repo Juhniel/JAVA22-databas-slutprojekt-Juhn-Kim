@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="validation checks">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" afterDir="false" />
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="deleting default account">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/database/DatabaseInitializer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +96,8 @@
       <workItem from="1685029612483" duration="24552000" />
       <workItem from="1685093819693" duration="47385000" />
       <workItem from="1685389407881" duration="14507000" />
-      <workItem from="1685467306897" duration="22383000" />
+      <workItem from="1685467306897" duration="22452000" />
+      <workItem from="1685530376146" duration="5606000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -217,7 +219,13 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1685490632302</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="deleting default account">
+      <created>1685490751428</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1685490751428</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,6 +249,7 @@
     <MESSAGE value="custom exceptionhandler" />
     <MESSAGE value="custom exceptionhandlers" />
     <MESSAGE value="validation checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="validation checks" />
+    <MESSAGE value="deleting default account" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleting default account" />
   </component>
 </project>

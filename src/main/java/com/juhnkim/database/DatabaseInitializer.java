@@ -18,9 +18,7 @@ public class DatabaseInitializer {
                     "online BOOLEAN, " +
                     "phone VARCHAR(20), " +
                     "address VARCHAR(100), " +
-                    "password VARCHAR(255)," +
-                    "is_deleted BOOLEAN DEFAULT FALSE," +
-                    "deleted_at TIMESTAMP" +
+                    "password VARCHAR(255)" +
                     ")";
 
             statement.executeUpdate(query);
@@ -42,10 +40,8 @@ public class DatabaseInitializer {
                     "balance DECIMAL(19, 2)," +
                     "created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "is_default BOOLEAN DEFAULT FALSE," +
-                    "is_deleted BOOLEAN DEFAULT FALSE," +
-                    "deleted_at TIMESTAMP," +
                     "user_id INT, " +
-                    "FOREIGN KEY (user_id) REFERENCES user(id))";
+                    "FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE)";
 
             statement.executeUpdate(query);
             System.out.println("account table successfully created!");
@@ -66,8 +62,8 @@ public class DatabaseInitializer {
                     "description VARCHAR(255), " +
                     "sender_account_id INT, " +
                     "receiver_account_id INT, " +
-                    "FOREIGN KEY (sender_account_id) REFERENCES account(id), " +
-                    "FOREIGN KEY (receiver_account_id) REFERENCES account(id))";
+                    "FOREIGN KEY (sender_account_id) REFERENCES account(id) ON DELETE CASCADE, " +
+                    "FOREIGN KEY (receiver_account_id) REFERENCES account(id) ON DELETE CASCADE)";
 
             statement.executeUpdate(query);
             System.out.println("transaction table successfully created!");
