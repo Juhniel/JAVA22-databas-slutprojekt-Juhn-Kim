@@ -141,7 +141,6 @@ public class UserMenu {
 
             if (isUserDeleted) {
                 loginService.setUserLogged(false);
-
                 System.out.println("--------------------------------------------------------------------");
                 System.out.print(ConsoleColors.GREEN);
                 System.out.println("                Your account has been deleted!                      ");

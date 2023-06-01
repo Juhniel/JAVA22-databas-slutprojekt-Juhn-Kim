@@ -36,11 +36,11 @@ public class AccountService {
         return accountRepository.createBankAccount(loggedInUser, account);
     }
 
-    public boolean deleteBankAccount(Account accountToDelete, List<Account> allAccountsFromUser) {
+    public void deleteBankAccount(Account accountToDelete, List<Account> allAccountsFromUser) {
         if(accountToDelete.isDefault() && allAccountsFromUser.size() > 1){
             throw new DeleteDefaultAccountException();
         }
-        return accountRepository.deleteBankAccount(accountToDelete);
+        accountRepository.deleteBankAccount(accountToDelete);
     }
 
 }

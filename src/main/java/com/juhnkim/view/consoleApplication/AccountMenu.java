@@ -93,7 +93,8 @@ public class AccountMenu {
     /*
         When user created a bank account we will also check in the service layer if the user already has a default
         account. If the user has a default account we will create a new regular account. If not we
-        will set it to the users default account to be able to receive funds.
+        will set it to the users default account to be able to receive funds. All new accounts opened will have 1000
+        in funds for test purposes.
     */
     public void handleCreateBankAccount(User loggedInUser) {
         System.out.println("What would you like to name your account?");
@@ -153,27 +154,20 @@ public class AccountMenu {
         System.out.println("--------------------------------------------------------------------");
         String userOption = scan.nextLine();
 
-        boolean isDeleted = false;
+
         if (userOption.equalsIgnoreCase("y")) {
             try {
-                isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
-            } catch (DeleteDefaultAccountException e) {
-                System.out.println("--------------------------------------------------------------------");
-                System.out.print(ConsoleColors.RED);
-                System.out.println(e.getMessage());
-            }
-
-            if (isDeleted) {
+                accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
                 System.out.println("--------------------------------------------------------------------");
                 System.out.print(ConsoleColors.GREEN);
                 System.out.println("                Your account has been deleted!                      ");
                 System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
-            } else {
-                System.out.print(ConsoleColors.RED);
-                System.out.println("         Failed to delete the account. Please try again later.      ");
-                System.out.print(ConsoleColors.RESET);
+            } catch (DeleteDefaultAccountException e) {
                 System.out.println("--------------------------------------------------------------------");
+                System.out.print(ConsoleColors.RED);
+                System.out.println(e.getMessage());
+                System.out.print(ConsoleColors.RESET);
             }
         }
     }

@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Comments &amp; Cleanup">
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="Comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/UserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/UserMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +24,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2QHAlN6qQlBp5zDxDX61KBEwcj0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -97,7 +102,7 @@
       <workItem from="1685093819693" duration="47385000" />
       <workItem from="1685389407881" duration="14507000" />
       <workItem from="1685467306897" duration="22452000" />
-      <workItem from="1685530376146" duration="45284000" />
+      <workItem from="1685530376146" duration="46019000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -261,7 +266,13 @@
       <option name="presentableId" value="LOCAL−00027" />
       <updated>1685653330185</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL−00028" summary="Comments">
+      <created>1685655161245</created>
+      <option name="number" value="LOCAL−00028" />
+      <option name="presentableId" value="LOCAL−00028" />
+      <updated>1685655161245</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,6 +303,7 @@
     <MESSAGE value="Cleanup and menu ui changes" />
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Comments &amp; Cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comments &amp; Cleanup" />
+    <MESSAGE value="Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comments" />
   </component>
 </project>
