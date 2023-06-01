@@ -140,8 +140,13 @@ public class UserRepository {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            setPreparedStatementValues(preparedStatement, user);
-            preparedStatement.setInt(8, user.getId());
+
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPhone());
+            preparedStatement.setString(4, user.getAddress());
+            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setInt(6, user.getId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;

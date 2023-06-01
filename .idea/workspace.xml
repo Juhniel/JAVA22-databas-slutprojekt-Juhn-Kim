@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="removed soft delete">
+    <list default="true" id="7d3cc931-7811-46a9-8ef4-dcc9d144c399" name="Changes" comment="added delete and validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/AccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/AccountMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/TransactionMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/UserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juhnkim/view/consoleApplication/UserMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +98,7 @@
       <workItem from="1685093819693" duration="47385000" />
       <workItem from="1685389407881" duration="14507000" />
       <workItem from="1685467306897" duration="22452000" />
-      <workItem from="1685530376146" duration="11304000" />
+      <workItem from="1685530376146" duration="20841000" />
     </task>
     <task id="LOCAL−00001" summary="Creating tables for database SwoshDB">
       <created>1685005788371</created>
@@ -239,7 +232,13 @@
       <option name="presentableId" value="LOCAL−00022" />
       <updated>1685557207896</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL−00023" summary="added delete and validation">
+      <created>1685563939095</created>
+      <option name="number" value="LOCAL−00023" />
+      <option name="presentableId" value="LOCAL−00023" />
+      <updated>1685563939095</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +264,7 @@
     <MESSAGE value="validation checks" />
     <MESSAGE value="deleting default account" />
     <MESSAGE value="removed soft delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed soft delete" />
+    <MESSAGE value="added delete and validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added delete and validation" />
   </component>
 </project>

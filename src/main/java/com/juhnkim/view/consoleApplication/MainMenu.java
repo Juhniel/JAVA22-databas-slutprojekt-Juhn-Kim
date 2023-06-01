@@ -80,6 +80,7 @@ public class MainMenu {
             System.out.println("--------------------------------------------------------------------");
             String name = scan.nextLine();
             System.out.println("--------------------------------------------------------------------");
+            System.out.println("                        (YYYYMMDD-XXXX)                             ");
             System.out.println("                  Enter your social security number:                ");
             System.out.println("--------------------------------------------------------------------");
             String ssn = scan.nextLine();
