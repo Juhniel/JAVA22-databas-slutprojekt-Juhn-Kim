@@ -91,7 +91,7 @@ public class AccountRepository {
         }
     }
 
-    public boolean deleteBankAccount(Account account) {
+    public void deleteBankAccount(Account account) {
         String query = "DELETE account FROM account WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -99,8 +99,7 @@ public class AccountRepository {
 
             preparedStatement.setInt(1, account.getId());
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);

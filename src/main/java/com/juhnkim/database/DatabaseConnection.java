@@ -58,8 +58,7 @@ public class DatabaseConnection {
 
     private Connection createConnection() {
         try {
-            Connection connection = dataSource.getConnection();
-            return connection;
+            return dataSource.getConnection();
         } catch (SQLException e) {
             System.err.println("Failed to create a connection: " + e.getMessage());
             return null;

@@ -93,7 +93,7 @@ public class UserRepository {
         }
     }
 
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
         String query = "UPDATE user SET name = ?, email = ?, phone = ?, address = ?, password = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -101,8 +101,7 @@ public class UserRepository {
 
             setPreparedStatementValuesForUpdate(preparedStatement, user);
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TransactionRepository {
 
-    public boolean addTransaction(Transaction transaction, Account senderAccount) {
+    public void addTransaction(Transaction transaction, Account senderAccount) {
         String query = "INSERT INTO transaction(amount, description, sender_account_id, receiver_account_id) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -24,15 +24,14 @@ public class TransactionRepository {
             preparedStatement.setInt(3, senderAccount.getId());
             preparedStatement.setInt(4, transaction.getReceiverAccountId());
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
     }
 
-    public boolean transferFunds(Transaction transaction, Account senderAccount) {
+    public void transferFunds(Transaction transaction, Account senderAccount) {
         String query1 = "UPDATE account SET balance = balance - ? WHERE id = ?";
         String query2 = "UPDATE account SET balance = balance + ? WHERE id = ?";
 
@@ -47,11 +46,9 @@ public class TransactionRepository {
 
             preparedStatement2.setBigDecimal(1, transaction.getAmount());
             preparedStatement2.setInt(2, transaction.getReceiverAccountId());
-            int rowsAffected = preparedStatement2.executeUpdate();
+            preparedStatement2.executeUpdate();
 
             addTransaction(transaction, senderAccount);
-
-            return rowsAffected > 0;
 
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
