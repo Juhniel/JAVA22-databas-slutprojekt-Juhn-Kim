@@ -24,7 +24,6 @@ public class Swosh {
         UserRepository userRepository = new UserRepository();
         TransactionRepository transactionRepository = new TransactionRepository();
 
-
         PasswordService passwordService = new PasswordService();
         AccountService accountService = new AccountService(accountRepository);
         TransactionService transactionService = new TransactionService(transactionRepository);

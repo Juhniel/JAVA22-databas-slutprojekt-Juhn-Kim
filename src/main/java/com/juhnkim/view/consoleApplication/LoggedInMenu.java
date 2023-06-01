@@ -7,6 +7,10 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.util.Scanner;
 
+/*
+    This class handles the Swosh menu after the user has successfully logged in. It mainly handles the routing to
+    respective menu that the user enters.
+*/
 public class LoggedInMenu {
 
     private final TransactionMenu transactionMenu;
@@ -51,7 +55,7 @@ public class LoggedInMenu {
                 System.out.println("                Invalid input. Please enter a number.               ");
                 System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
-                userOption = -1; // So the loop continues.
+                userOption = -1;
             }
         } while (userOption != 0 && loginService.isUserLogged());
         System.out.println("                        Logging out..                             ");

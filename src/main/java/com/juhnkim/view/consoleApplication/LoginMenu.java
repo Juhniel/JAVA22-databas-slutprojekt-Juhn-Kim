@@ -6,6 +6,10 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.util.Scanner;
 
+/*
+    This class handles displaying the login menu for the user and routing the user to the Swosh menu if the login was
+    successful.
+*/
 public class LoginMenu {
     private final LoginService loginService;
     private final Scanner scan;

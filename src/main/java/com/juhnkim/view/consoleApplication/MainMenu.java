@@ -10,6 +10,11 @@ import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
+ /*
+    This class handles displaying the first Main Menu of the console application where the user is able to
+    Register a new account and logging into the application. It handles everything from errors to routing to the
+    correct function.
+ */
 public class MainMenu {
 
     private final UserService userService;

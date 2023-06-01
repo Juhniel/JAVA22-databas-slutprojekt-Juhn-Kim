@@ -19,6 +19,13 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+ This class provides the Transaction menu for the console application.
+ It leverages UserService, AccountService, and TransactionService to handle transaction operations for a User.
+ The console menu supports operations such as transferring funds between users, viewing all transactions,
+ and filtering transactions by date.
+*/
+
 public class TransactionMenu {
 
     private final UserService userService;
@@ -84,6 +91,12 @@ public class TransactionMenu {
         }
     }
 
+    /*
+      Handles the operation to transfer funds from one user to another.
+      The user is guided to select an account, enter an amount, a message, and receiver's phone number.
+      If the transfer operation fails due to reasons such as insufficient funds or invalid receiver,
+      an error message is displayed to the console.
+    */
     public void handleTransferFunds(User loggedInUser) {
         List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 
@@ -177,6 +190,10 @@ public class TransactionMenu {
         }
     }
 
+    /*
+      Fetches and displays all transactions associated with the logged-in user.
+      If the user has no transactions, an appropriate message is displayed.
+    */
     public void handleShowAllTransactions(User loggedInUser) {
         List<Transaction> transactions = transactionService.showAllTransactions(loggedInUser);
         if (transactions.isEmpty()) {
@@ -197,21 +214,26 @@ public class TransactionMenu {
         }
     }
 
+    /*
+      Fetches and displays transactions associated with the logged-in user, filtered by date.
+      The user is guided to input the from-date and to-date for the transactions to be filtered.
+      If the user has no transactions for the specified dates, an appropriate message is displayed.
+    */
     public void handleShowTransactionsByDate(User loggedInUser) {
         LocalDate fromDate;
         LocalDate toDate;
-        while(true){
+        while (true) {
             System.out.println("From:");
             System.out.println("Enter the date (in the format yyyy-mm-dd):");
             String fromDateString = scan.nextLine();
             System.out.println("To:");
             System.out.println("Enter the date (in the format yyyy-mm-dd):");
             String toDateString = scan.nextLine();
-            try{
+            try {
                 fromDate = LocalDate.parse(fromDateString);
                 toDate = LocalDate.parse(toDateString);
                 break;
-            }catch(DateTimeParseException e){
+            } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please try again.");
             }
         }

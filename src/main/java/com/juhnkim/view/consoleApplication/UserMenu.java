@@ -9,6 +9,11 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+  This class provides the User menu for the console application. It handles displaying menu, handling the menu,
+  controlling and routing to the functions necessary.
+*/
+
 public class UserMenu {
     private final UserService userService;
     private final LoginService loginService;
@@ -112,6 +117,13 @@ public class UserMenu {
         }
     }
 
+    /*
+      Deletes the logged-in user's account.
+      The function first confirms the deletion with the user.
+      If the user confirms, the function attempts to delete the user account.
+      If the deletion is successful, the user is logged out.
+      If the deletion fails, an error message is displayed to the console.
+    */
     public void deleteExistingUser(User loggedInUser) {
         System.out.println("--------------------------------------------------------------------");
         System.out.print(ConsoleColors.BLUE);

@@ -5,6 +5,10 @@ import com.juhnkim.exception.UserNotFoundException;
 import com.juhnkim.model.User;
 import com.juhnkim.repository.UserRepository;
 
+/*
+    This class validates the users inputs before passing them to the repository classes where we handle methods to
+    the mySQL database. Validating user inputs and catching error.
+*/
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordService passwordService;
@@ -23,7 +27,7 @@ public class UserService {
         }
 
         if(userRepository.getUserByPhone(phone) == null) {
-            throw new IllegalArgumentException("User with that phone number does not exist!");
+            throw new UserNotFoundException(phone);
         }
         return phone;
     }
@@ -81,19 +85,20 @@ public class UserService {
         return userRepository.addUser(user);
     }
 
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
 
         user.setPassword(validateAndHashPassword(user.getPassword()));
         user.setEmail(validateEmail(user.getEmail()));
         user.setPhone(validatePhone(user.getPhone()));
 
-        return userRepository.updateUser(user);
+        userRepository.updateUser(user);
     }
 
     public boolean deleteUser(User user) {
         return userRepository.deleteUser(user);
     }
 
+    // Might be used in the future do not remove :)
     public User getUserById(int id) {
         return userRepository.getUserById(id);
     }
@@ -120,8 +125,7 @@ public class UserService {
         if (validatePassword(password)) {
             return passwordService.hashPassword(password);
         } else {
-            // you can throw an exception here or return a special value to indicate that the password was invalid
-            throw new IllegalArgumentException("Invalid password");
+            throw new IllegalArgumentException("Invalid password format/length.");
         }
     }
 
@@ -130,7 +134,6 @@ public class UserService {
             return false;
         }
 
-        // check if password contains at least one special character
         if (!password.matches(".*\\p{Punct}.*")) {
             return false;
         }
@@ -138,7 +141,6 @@ public class UserService {
             return false;
         }
 
-        // check if password contains any whitespace
         if (password.contains(" ")) {
             return false;
         }

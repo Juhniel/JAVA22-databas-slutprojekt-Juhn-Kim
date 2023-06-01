@@ -9,6 +9,10 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+    This class handles all the user accounts and the user is also able to check the balance, open up a new bank account
+    or deleting existing bank account.
+*/
 public class AccountMenu {
     private final AccountService accountService;
     private final Scanner scan;

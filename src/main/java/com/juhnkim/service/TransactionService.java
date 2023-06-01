@@ -4,14 +4,19 @@ import com.juhnkim.exception.InsufficientFundsException;
 import com.juhnkim.model.Account;
 import com.juhnkim.model.Transaction;
 import com.juhnkim.model.User;
-import com.juhnkim.repository.AccountRepository;
 import com.juhnkim.repository.TransactionRepository;
-import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
+
+
+/*
+    This class validates the users inputs before passing them to the repository classes where we handle methods to
+    the mySQL database. Validating user inputs and catching error.
+*/
+
 
 public class TransactionService {
     private final TransactionRepository transactionRepository;
@@ -21,17 +26,13 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
-    public boolean transferFunds(Transaction transaction, Account senderAccount) {
-
+    public void transferFunds(Transaction transaction, Account senderAccount) {
         BigDecimal transactionAmount = transaction.getAmount().setScale(2, RoundingMode.HALF_UP);
 
-        // Check if the sender has enough funds
         if (senderAccount.getBalance().compareTo(transactionAmount) < 0) {
             throw new InsufficientFundsException(senderAccount.getBalance(), transactionAmount);
         }
-
-        // If the sender has enough funds, execute the transaction
-        return transactionRepository.transferFunds(transaction, senderAccount);
+        transactionRepository.transferFunds(transaction, senderAccount);
     }
 
     public List<Transaction> showAllTransactions(User loggedInUser) {
