@@ -1,4 +1,4 @@
-# JAVA22-databas-slutprojekt-Juhn-Kim
+# Swosh - Banking application
 
 This project represents a console-based banking application. 
 The application provides a simple and intuitive interface for users to register accounts, log in, and perform various banking operations, all through the console.
