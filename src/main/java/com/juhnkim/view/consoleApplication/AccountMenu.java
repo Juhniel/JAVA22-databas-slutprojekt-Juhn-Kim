@@ -66,6 +66,9 @@ public class AccountMenu {
         }
     }
 
+    /*
+        Displaying all accounts and showing the name, number and balance of each account.
+    */
     public void handleAllUserAccounts(User loggedInUser) {
         List<Account> userAccounts = accountService.getAllUserAccountsById(loggedInUser.getId());
 
@@ -87,6 +90,11 @@ public class AccountMenu {
         }
     }
 
+    /*
+        When user created a bank account we will also check in the service layer if the user already has a default
+        account. If the user has a default account we will create a new regular account. If not we
+        will set it to the users default account to be able to receive funds.
+    */
     public void handleCreateBankAccount(User loggedInUser) {
         System.out.println("What would you like to name your account?");
         String accountName = scan.nextLine();
@@ -107,6 +115,10 @@ public class AccountMenu {
         }
     }
 
+    /*
+        A note here is that the user can not delete his/hers default account if the user has other accounts
+        available. This is because we want to make sure that the user receives funds to the account flagged as default.
+    */
     public void handleDeleteBankAccount(User loggedInUser) {
         List<Account> allAccountsFromUser = accountService.getAllUserAccountsById(loggedInUser.getId());
 

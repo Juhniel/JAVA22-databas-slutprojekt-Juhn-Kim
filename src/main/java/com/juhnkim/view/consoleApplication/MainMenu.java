@@ -83,7 +83,10 @@ public class MainMenu {
         }
     }
 
-
+    /*
+        When user successfully created an account we also open up a default account which will be used as
+        the default account that will receive funds from other users.
+    */
     public void createNewUserAccount() {
         while (true) {
             System.out.println("--------------------------------------------------------------------");
