@@ -22,10 +22,16 @@ public class AccountMenu {
         int userOption;
         do {
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.WHITE);
+            System.out.println("                            ** Account Menu **                      ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.BLUE);
             System.out.println("                        1. Check balance                            ");
             System.out.println("                        2. Create new bank account                  ");
             System.out.println("                        3. Delete bank account                      ");
             System.out.println("                        6. Previous                                 ");
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
 
             try {
@@ -61,9 +67,9 @@ public class AccountMenu {
 
         if (userAccounts.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
+            System.out.print(ConsoleColors.RED);
             System.out.println("                  You don't have any accounts.                       ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;
         }
@@ -84,15 +90,15 @@ public class AccountMenu {
 
         if (isAccountCreated) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.GREEN);
+            System.out.print(ConsoleColors.GREEN);
             System.out.println("                Your account has been created!                      ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
         } else {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
+            System.out.print(ConsoleColors.RED);
             System.out.println("             Failed to create account. Please try again later.      ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
         }
     }
@@ -102,9 +108,9 @@ public class AccountMenu {
 
         if (allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
+            System.out.print(ConsoleColors.RED);
             System.out.println("                      You don't have any accounts.                  ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;
         }
@@ -123,11 +129,11 @@ public class AccountMenu {
         Account accountToDelete = allAccountsFromUser.get(accountIndex - 1);
 
         System.out.println("--------------------------------------------------------------------");
-        System.out.println(ConsoleColors.BLUE);
+        System.out.print(ConsoleColors.BLUE);
         System.out.println("           Your bank account will permanently be deleted.           ");
         System.out.println("        Are you still sure you want to close your account?          ");
         System.out.println("                                y/n:                                ");
-        System.out.println(ConsoleColors.RESET);
+        System.out.print(ConsoleColors.RESET);
         System.out.println("--------------------------------------------------------------------");
         String userOption = scan.nextLine();
 
@@ -137,20 +143,20 @@ public class AccountMenu {
                 isDeleted = accountService.deleteBankAccount(accountToDelete, allAccountsFromUser);
             } catch (DeleteDefaultAccountException e) {
                 System.out.println("--------------------------------------------------------------------");
-                System.out.println(ConsoleColors.RED);
+                System.out.print(ConsoleColors.RED);
                 System.out.println(e.getMessage());
             }
 
             if (isDeleted) {
                 System.out.println("--------------------------------------------------------------------");
-                System.out.println(ConsoleColors.GREEN);
+                System.out.print(ConsoleColors.GREEN);
                 System.out.println("                Your account has been deleted!                      ");
-                System.out.println(ConsoleColors.RESET);
+                System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
             } else {
-                System.out.println(ConsoleColors.RED);
+                System.out.print(ConsoleColors.RED);
                 System.out.println("         Failed to delete the account. Please try again later.      ");
-                System.out.println(ConsoleColors.RESET);
+                System.out.print(ConsoleColors.RESET);
                 System.out.println("--------------------------------------------------------------------");
             }
         }

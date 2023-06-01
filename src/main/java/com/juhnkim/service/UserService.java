@@ -57,7 +57,7 @@ public class UserService {
         ssn = ssn.trim();
 
         if(userRepository.getUserBySsn(ssn) != null) {
-            throw new IllegalArgumentException("User already exists");
+            throw new IllegalArgumentException("User already exist with the same SSN");
         }
 
         if (ssn.length() < 12 || ssn.length() > 13) {
@@ -82,6 +82,11 @@ public class UserService {
     }
 
     public boolean updateUser(User user) {
+
+        user.setPassword(validateAndHashPassword(user.getPassword()));
+        user.setEmail(validateEmail(user.getEmail()));
+        user.setPhone(validatePhone(user.getPhone()));
+
         return userRepository.updateUser(user);
     }
 

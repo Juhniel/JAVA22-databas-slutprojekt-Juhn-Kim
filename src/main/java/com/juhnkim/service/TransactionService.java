@@ -23,12 +23,6 @@ public class TransactionService {
 
     public boolean transferFunds(Transaction transaction, Account senderAccount) {
 
-//        Account senderAccount = accountService.getDefaultAccountForUser(loggedInUser.getId());
-
-//        if (loggedInUser == null) {
-//            throw new RuntimeException("Sender account not found");
-//        }
-
         BigDecimal transactionAmount = transaction.getAmount().setScale(2, RoundingMode.HALF_UP);
 
         // Check if the sender has enough funds
@@ -44,7 +38,7 @@ public class TransactionService {
         return transactionRepository.showAllTransactions(loggedInUser);
     }
 
-    public List<Transaction> showTransactionsByDate(User loggedInUser, LocalDate date) {
-        return transactionRepository.showTransactionsByDate(loggedInUser, date);
+    public List<Transaction> showTransactionsByDate(User loggedInUser, LocalDate fromDate, LocalDate toDate) {
+        return transactionRepository.showTransactionsByDate(loggedInUser, fromDate, toDate);
     }
 }

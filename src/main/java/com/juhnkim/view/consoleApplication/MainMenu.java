@@ -82,31 +82,61 @@ public class MainMenu {
     public void createNewUserAccount() {
         while (true) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("                        Enter name: ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                        Enter name:                                 ");
             System.out.println("--------------------------------------------------------------------");
             String name = scan.nextLine();
+            if ("exit".equalsIgnoreCase(name)) {
+                break;
+            }
+
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("                        (YYYYMMDD-XXXX)                             ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                          (YYYYMMDD-XXXX)                           ");
             System.out.println("                  Enter your social security number:                ");
             System.out.println("--------------------------------------------------------------------");
             String ssn = scan.nextLine();
+            if ("exit".equalsIgnoreCase(ssn)) {
+                break;
+            }
+
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("                        Enter email: ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                        Enter email:                                ");
             System.out.println("--------------------------------------------------------------------");
             String email = scan.nextLine();
+            if ("exit".equalsIgnoreCase(email)) {
+                break;
+            }
+
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("Make sure your password contains 1 special letter & 1 uppercase letter");
-            System.out.println("                        Enter password: ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                Make sure your password contains                    ");
+            System.out.println("                1 special letter & 1 uppercase letter               ");
+            System.out.println("                        Enter password:                             ");
             System.out.println("--------------------------------------------------------------------");
             String password = scan.nextLine();
+            if ("exit".equalsIgnoreCase(password)) {
+                break;
+            }
+
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("                        Enter phone: ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                        Enter phone:                                ");
             System.out.println("--------------------------------------------------------------------");
             String phone = scan.nextLine();
+            if ("exit".equalsIgnoreCase(phone)) {
+                break;
+            }
+
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("                        Enter address: ");
+            System.out.println("                      type 'exit' to quit                           ");
+            System.out.println("                        Enter address:                              ");
             System.out.println("--------------------------------------------------------------------");
             String address = scan.nextLine();
+            if ("exit".equalsIgnoreCase(address)) {
+                break;
+            }
 
             try {
                 String hashedPassword = userService.validateAndHashPassword(password);

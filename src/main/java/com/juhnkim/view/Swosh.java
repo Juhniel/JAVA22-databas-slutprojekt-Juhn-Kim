@@ -22,7 +22,7 @@ public class Swosh {
         Scanner scan = new Scanner(System.in);
         AccountRepository accountRepository = new AccountRepository();
         UserRepository userRepository = new UserRepository();
-        TransactionRepository transactionRepository = new TransactionRepository(accountRepository);
+        TransactionRepository transactionRepository = new TransactionRepository();
 
 
         PasswordService passwordService = new PasswordService();

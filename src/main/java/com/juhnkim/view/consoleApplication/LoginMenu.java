@@ -53,6 +53,7 @@ public class LoginMenu {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.GREEN);
             System.out.println("                        Login successful!");
+            System.out.println("                        Welcome " + loggedInUser.getName() +"!      ");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             loggedInMenu.displayLoggedInMenu(loggedInUser);

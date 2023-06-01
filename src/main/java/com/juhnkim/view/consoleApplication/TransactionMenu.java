@@ -14,6 +14,7 @@ import com.juhnkim.view.consoleColors.ConsoleColors;
 import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -37,7 +38,7 @@ public class TransactionMenu {
         do {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.WHITE);
-            System.out.println("                         ** Transaction Menu **"                     );
+            System.out.println("                         ** Transaction Menu **");
             System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
@@ -45,8 +46,8 @@ public class TransactionMenu {
             System.out.println("                        2. Show all transactions                    ");
             System.out.println("                        3. Show transactions by date                ");
             System.out.println("                        6. Previous                                 ");
-            System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
 
 
             try {
@@ -88,25 +89,25 @@ public class TransactionMenu {
 
         if (allAccountsFromUser.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.RED);
+            System.out.print(ConsoleColors.RED);
             System.out.println("                  You don't have any accounts.                       ");
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             System.out.println("--------------------------------------------------------------------");
             return;
         }
         System.out.println("--------------------------------------------------------------------");
-        System.out.println(ConsoleColors.BLUE);
+        System.out.print(ConsoleColors.BLUE);
         System.out.println("                    Here are your accounts:                         ");
-        System.out.println(ConsoleColors.RESET);
+        System.out.print(ConsoleColors.RESET);
         System.out.println("--------------------------------------------------------------------");
         int i = 1;
         for (Account account : allAccountsFromUser) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.println(ConsoleColors.PURPLE);
-            System.out.println("Account " + i);
+            System.out.print(ConsoleColors.PURPLE);
+            System.out.println("Account " + "(" + i + ")");
             System.out.println("Account name: " + account.getAccountName());
             System.out.println("Account number: " + account.getAccountNumber());
-            System.out.println(ConsoleColors.RESET);
+            System.out.print(ConsoleColors.RESET);
             i++;
         }
 
@@ -116,11 +117,11 @@ public class TransactionMenu {
             try {
                 accountIndex = scan.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println(ConsoleColors.RED);
+                System.out.print(ConsoleColors.RED);
                 System.out.println("--------------------------------------------------------------------");
                 System.out.println("                Invalid input. Please enter a number.");
                 System.out.println("--------------------------------------------------------------------");
-                System.out.println(ConsoleColors.RESET);
+                System.out.print(ConsoleColors.RESET);
                 scan.nextLine();
             }
         }
@@ -148,7 +149,13 @@ public class TransactionMenu {
         try {
             String validatedPhone = userService.validateReceiverPhone(phone);
             receiverUser = userService.getUserByPhone(validatedPhone, loggedInUser);
-        } catch (UserNotFoundException | SameUserTransferException e) {
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.GREEN);
+            System.out.println("                    Transaction successful!                         ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+
+        } catch (UserNotFoundException | SameUserTransferException | IllegalArgumentException e) {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.RED);
             System.out.println(e.getMessage());
@@ -158,7 +165,6 @@ public class TransactionMenu {
         }
 
         Account receiverAccount = accountService.getDefaultAccountForUser(receiverUser.getId());
-
 
         try {
             transactionService.transferFunds(new Transaction(amount, description, senderAccount.getId(), receiverAccount.getId()), senderAccount);
@@ -192,10 +198,25 @@ public class TransactionMenu {
     }
 
     public void handleShowTransactionsByDate(User loggedInUser) {
-        System.out.println("Enter the date (in the format yyyy-mm-dd):");
-        String dateInput = scan.nextLine();
-        LocalDate date = LocalDate.parse(dateInput);
-        List<Transaction> transactions = transactionService.showTransactionsByDate(loggedInUser, date);
+        LocalDate fromDate;
+        LocalDate toDate;
+        while(true){
+            System.out.println("From:");
+            System.out.println("Enter the date (in the format yyyy-mm-dd):");
+            String fromDateString = scan.nextLine();
+            System.out.println("To:");
+            System.out.println("Enter the date (in the format yyyy-mm-dd):");
+            String toDateString = scan.nextLine();
+            try{
+                fromDate = LocalDate.parse(fromDateString);
+                toDate = LocalDate.parse(toDateString);
+                break;
+            }catch(DateTimeParseException e){
+                System.out.println("Invalid date format. Please try again.");
+            }
+        }
+
+        List<Transaction> transactions = transactionService.showTransactionsByDate(loggedInUser, fromDate, toDate);
         if (transactions.isEmpty()) {
             System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.RED);
@@ -205,9 +226,12 @@ public class TransactionMenu {
             return;
         }
         for (Transaction transaction : transactions) {
-            System.out.println(transaction);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.PURPLE);
+            System.out.println("Date: " + transaction.getCreated());
+            System.out.println("From accountId: " + transaction.getSenderAccountId() + "\nTo accountId: " + transaction.getReceiverAccountId());
+            System.out.println("Amount: " + transaction.getAmount());
+            System.out.print(ConsoleColors.RESET);
         }
     }
-
-
 }
