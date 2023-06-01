@@ -30,6 +30,10 @@ public class LoggedInMenu {
         int userOption;
         do {
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.WHITE);
+            System.out.println("                        ** SWOSH MENU **                            ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
             System.out.println("                Choose one of the menu options:                     ");
             System.out.println("                        1. Transactions                             ");

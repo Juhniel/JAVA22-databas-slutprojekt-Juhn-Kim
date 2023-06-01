@@ -12,6 +12,7 @@ import com.juhnkim.service.UserService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -35,11 +36,18 @@ public class TransactionMenu {
         int userOption;
         do {
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.WHITE);
+            System.out.println("                         ** Transaction Menu **"                     );
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.BLUE);
             System.out.println("                        1. Transfer funds                           ");
             System.out.println("                        2. Show all transactions                    ");
             System.out.println("                        3. Show transactions by date                ");
             System.out.println("                        6. Previous                                 ");
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RESET);
+
 
             try {
                 userOption = Integer.parseInt(scan.nextLine());
@@ -86,15 +94,19 @@ public class TransactionMenu {
             System.out.println("--------------------------------------------------------------------");
             return;
         }
-
-        System.out.println("Here are your accounts:");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println(ConsoleColors.BLUE);
+        System.out.println("                    Here are your accounts:                         ");
+        System.out.println(ConsoleColors.RESET);
+        System.out.println("--------------------------------------------------------------------");
         int i = 1;
         for (Account account : allAccountsFromUser) {
             System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.PURPLE);
             System.out.println("Account " + i);
             System.out.println("Account name: " + account.getAccountName());
             System.out.println("Account number: " + account.getAccountNumber());
-            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.RESET);
             i++;
         }
 
@@ -104,7 +116,11 @@ public class TransactionMenu {
             try {
                 accountIndex = scan.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println(ConsoleColors.RED);
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println("                Invalid input. Please enter a number.");
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println(ConsoleColors.RESET);
                 scan.nextLine();
             }
         }
@@ -158,7 +174,11 @@ public class TransactionMenu {
     public void handleShowAllTransactions(User loggedInUser) {
         List<Transaction> transactions = transactionService.showAllTransactions(loggedInUser);
         if (transactions.isEmpty()) {
-            System.out.println("You have no transactions.");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            System.out.println("                You have no transactions                            ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
             return;
         }
         for (Transaction transaction : transactions) {
@@ -177,7 +197,11 @@ public class TransactionMenu {
         LocalDate date = LocalDate.parse(dateInput);
         List<Transaction> transactions = transactionService.showTransactionsByDate(loggedInUser, date);
         if (transactions.isEmpty()) {
-            System.out.println("You have no transactions for this date.");
+            System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.RED);
+            System.out.println("                You have no transactions for this date              ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
             return;
         }
         for (Transaction transaction : transactions) {

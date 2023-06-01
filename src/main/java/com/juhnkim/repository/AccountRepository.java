@@ -15,6 +15,16 @@ import java.util.UUID;
 
 public class AccountRepository {
 
+    private Account createAccountFromResultSet(ResultSet resultSet, int userId) throws SQLException {
+        int id = resultSet.getInt("id");
+        String accountName = resultSet.getString("account_name");
+        String accountNumber = resultSet.getString("account_number");
+        BigDecimal balance = resultSet.getBigDecimal("balance");
+        boolean isDefault = resultSet.getBoolean("is_default");
+
+        return new Account(id, accountName, accountNumber, balance, isDefault, userId);
+    }
+
     public List<Account> getAllUserAccountsById(int id) {
         String query = "SELECT * FROM account WHERE user_id = ?";
 
@@ -26,14 +36,7 @@ public class AccountRepository {
 
             List<Account> accounts = new ArrayList<>();
             while (resultSet.next()) {
-                int accountId = resultSet.getInt("id");
-                String accountName = resultSet.getString("account_name");
-                String accountNumber = resultSet.getString("account_number");
-                BigDecimal balance = resultSet.getBigDecimal("balance");
-                boolean isDefault = resultSet.getBoolean("is_default");
-                int loggedInUserId = resultSet.getInt("user_id");
-
-                accounts.add(new Account(accountId, accountName, accountNumber, balance, isDefault, loggedInUserId));
+                accounts.add(createAccountFromResultSet(resultSet, id));
             }
             return accounts;
 
@@ -53,13 +56,7 @@ public class AccountRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String accountName = resultSet.getString("account_name");
-                String accountNumber = resultSet.getString("account_number");
-                BigDecimal balance = resultSet.getBigDecimal("balance");
-                boolean isDefault = resultSet.getBoolean("is_default");
-
-                return new Account(id, accountName, accountNumber, balance, isDefault, userId);
+                return createAccountFromResultSet(resultSet, userId);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
@@ -67,6 +64,16 @@ public class AccountRepository {
         return null;
     }
 
+    private void setCreateBankAccountPreparedStatement(PreparedStatement preparedStatement, User loggedInUser, Account account) throws SQLException {
+        String accountNumber = UUID.randomUUID().toString();
+        account.setAccountNumber(accountNumber);
+
+        preparedStatement.setString(1, account.getAccountName());
+        preparedStatement.setString(2, account.getAccountNumber());
+        preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));
+        preparedStatement.setBoolean(4, account.isDefault());
+        preparedStatement.setInt(5, loggedInUser.getId());
+    }
 
     public boolean createBankAccount(User loggedInUser, Account account) {
         String query = "INSERT INTO account(account_name, account_number, balance, is_default, user_id) VALUES (?, ?, ?, ?, ?)";
@@ -74,14 +81,7 @@ public class AccountRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            String accountNumber = UUID.randomUUID().toString();
-            account.setAccountNumber(accountNumber);
-
-            preparedStatement.setString(1, account.getAccountName());
-            preparedStatement.setString(2, account.getAccountNumber());
-            preparedStatement.setBigDecimal(3, BigDecimal.valueOf(1000));
-            preparedStatement.setBoolean(4, account.isDefault());
-            preparedStatement.setInt(5, loggedInUser.getId());
+            setCreateBankAccountPreparedStatement(preparedStatement, loggedInUser, account);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;

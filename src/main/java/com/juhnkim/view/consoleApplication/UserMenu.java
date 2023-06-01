@@ -24,16 +24,27 @@ public class UserMenu {
         int userOption;
         do {
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.WHITE);
+            System.out.println("                           ** User Menu  **                         ");
+            System.out.println(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.BLUE);
             System.out.println("                        1. Show User information                    ");
             System.out.println("                        2. Edit User information                    ");
             System.out.println("                        3. Delete User                              ");
             System.out.println("                        6. Previous                                 ");
             System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.RESET);
+
             try {
                 userOption = Integer.parseInt(scan.nextLine());
                 handleUserMenu(userOption, loggedInUser);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("--------------------------------------------------------------------");
+                System.out.println(ConsoleColors.RED);
+                System.out.println("             ** Invalid input. Please enter a number **             ");
+                System.out.println(ConsoleColors.RESET);
+                System.out.println("--------------------------------------------------------------------");
                 scan.nextLine();
                 userOption = -1;
             }
@@ -60,7 +71,11 @@ public class UserMenu {
 
     public void displayUserInformation(User loggedInUser) {
         System.out.println("--------------------------------------------------------------------");
-        System.out.println(ConsoleColors.GREEN);
+        System.out.println(ConsoleColors.BLUE);
+        System.out.println("                      ** User information  **                       ");
+        System.out.println(ConsoleColors.RESET);
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println(ConsoleColors.PURPLE);
         System.out.println("        SSN: " + loggedInUser.getSsn());
         System.out.println("        Name: " + loggedInUser.getName());
         System.out.println("        Email: " + loggedInUser.getEmail());
@@ -68,7 +83,6 @@ public class UserMenu {
         System.out.println("        Phone: " + loggedInUser.getPhone());
         System.out.println("        Created: " + loggedInUser.getCreated());
         System.out.println(ConsoleColors.RESET);
-        System.out.println("--------------------------------------------------------------------");
     }
 
     public void updateUserInformation(User loggedInUser) {
@@ -84,7 +98,12 @@ public class UserMenu {
         String address = scan.nextLine();
         boolean userUpdated = userService.updateUser(new User(loggedInUser.getId(), name, loggedInUser.getSsn(), email, false, phone, address, password));
         if (userUpdated) {
-            System.out.println("User was successfully updated!");
+
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println(ConsoleColors.GREEN);
+            System.out.println("                    User was successfully updated!                  ");
+            System.out.println(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
         }
     }
 
@@ -107,7 +126,7 @@ public class UserMenu {
                 loginService.setUserLogged(false);
 
                 System.out.println("--------------------------------------------------------------------");
-                System.out.println(ConsoleColors.BLUE);
+                System.out.println(ConsoleColors.GREEN);
                 System.out.println("                Your account has been deleted!                      ");
             } else {
                 System.out.println("--------------------------------------------------------------------");
@@ -115,7 +134,6 @@ public class UserMenu {
                 System.out.println("                Something went wrong.. Please try again later       ");
             }
             System.out.println(ConsoleColors.RESET);
-            System.out.println("--------------------------------------------------------------------");
         }
     }
 }

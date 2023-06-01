@@ -22,7 +22,6 @@ public class DatabaseInitializer {
                     ")";
 
             statement.executeUpdate(query);
-            System.out.println("user table successfully created!");
 
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
@@ -44,8 +43,6 @@ public class DatabaseInitializer {
                     "FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE)";
 
             statement.executeUpdate(query);
-            System.out.println("account table successfully created!");
-
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
         }
@@ -66,8 +63,6 @@ public class DatabaseInitializer {
                     "FOREIGN KEY (receiver_account_id) REFERENCES account(id) ON DELETE CASCADE)";
 
             statement.executeUpdate(query);
-            System.out.println("transaction table successfully created!");
-
         } catch (Exception e) {
             throw new RuntimeException("Database operation failed", e);
         }

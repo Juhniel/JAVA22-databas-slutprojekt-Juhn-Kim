@@ -23,7 +23,7 @@ public class LoginMenu {
 
         while (!loginService.isUserLogged()) {
             System.out.println("--------------------------------------------------------------------");
-            System.out.print(ConsoleColors.BLUE);
+            System.out.print(ConsoleColors.WHITE);
             System.out.println("                              ** LOGIN **                           ");
             System.out.println("                       Enter 'exit' to go back to menu              ");
             System.out.print(ConsoleColors.RESET);

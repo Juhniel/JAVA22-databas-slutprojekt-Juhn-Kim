@@ -7,6 +7,7 @@ import com.juhnkim.service.UserService;
 import com.juhnkim.view.consoleColors.ConsoleColors;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -27,9 +28,12 @@ public class MainMenu {
         int userOption;
         do {
             System.out.println("--------------------------------------------------------------------");
+            System.out.print(ConsoleColors.WHITE);
+            System.out.println("                            ** Main Menu **                         ");
+            System.out.print(ConsoleColors.RESET);
+            System.out.println("--------------------------------------------------------------------");
             System.out.print(ConsoleColors.BLUE);
             System.out.println("                            ** WELCOME! **                          ");
-            System.out.println("                    What would you like to do today?                ");
             System.out.println("                          1. Register new account                   ");
             System.out.println("                          2. Login                                  ");
             System.out.println("                          0. Exit                                   ");
@@ -49,7 +53,9 @@ public class MainMenu {
             }
         } while (userOption != 0);
         System.out.println("--------------------------------------------------------------------");
+        System.out.print(ConsoleColors.BLUE);
         System.out.println("                    Exiting application...                          ");
+        System.out.print(ConsoleColors.RESET);
         System.out.println("--------------------------------------------------------------------");
     }
 

@@ -6,7 +6,6 @@ import com.juhnkim.model.User;
 import java.sql.*;
 
 public class UserRepository {
-
     private void setPreparedStatementValues(PreparedStatement preparedStatement, User user) throws SQLException {
         preparedStatement.setString(1, user.getSsn());
         preparedStatement.setString(2, user.getName());
@@ -17,94 +16,52 @@ public class UserRepository {
         preparedStatement.setString(7, user.getPassword());
     }
 
-    public User getUserById(int id){
-        String query = "SELECT * FROM user WHERE id = ?";
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String ssn = resultSet.getString("ssn");
+        String name = resultSet.getString("name");
+        String email = resultSet.getString("email");
+        boolean online = resultSet.getBoolean("online");
+        String phone = resultSet.getString("phone");
+        String address = resultSet.getString("address");
+        String password = resultSet.getString("password");
 
+        return new User(id, name, ssn, email, online, phone, address, password);
+    }
+
+    private User getUserByParameter(String parameter, String query) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setLong(1, id);
+            preparedStatement.setString(1, parameter);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                int user_id = resultSet.getInt("id");
-                String ssn = resultSet.getString("ssn");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                boolean online = resultSet.getBoolean("online");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                String password = resultSet.getString("password");
-                User user = new User(user_id, name, ssn, email, online, phone, address, password);
-                return user;
+                return getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
         return null;
+    }
+
+    public User getUserById(int id){
+        String query = "SELECT * FROM user WHERE id = ?";
+        return getUserByParameter(Integer.toString(id), query);
     }
 
     public User getUserBySsn(String ssn){
         String query = "SELECT * FROM user WHERE ssn = ?";
-
         if(ssn.contains("-")){
             ssn = ssn.replace("-", "");
         }
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, ssn);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                boolean online = resultSet.getBoolean("online");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                String password = resultSet.getString("password");
-                User user = new User(id, name, ssn, email, online, phone, address, password);
-                user.setSsn(ssn);
-                return user;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Database operation failed", e);
-        }
-        return null;
+        return getUserByParameter(ssn, query);
     }
 
     public User getUserByPhone(String phone) {
         String query = "SELECT * FROM user WHERE phone = ?";
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, phone);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                int user_id = resultSet.getInt("id");
-                String ssn = resultSet.getString("ssn");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                boolean online = resultSet.getBoolean("online");
-                String userPhone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                String password = resultSet.getString("password");
-
-                User user = new User(user_id, name, ssn, email, online, userPhone, address, password);
-                return user;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Database operation failed", e);
-        }
-
-        return null;
+        return getUserByParameter(phone, query);
     }
 
     public User addUser(User user) {
@@ -113,6 +70,7 @@ public class UserRepository {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
             setPreparedStatementValues(preparedStatement, user);
             int affectedRows = preparedStatement.executeUpdate();
 
@@ -141,12 +99,7 @@ public class UserRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPhone());
-            preparedStatement.setString(4, user.getAddress());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setInt(6, user.getId());
+            setPreparedStatementValuesForUpdate(preparedStatement, user);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
@@ -156,9 +109,17 @@ public class UserRepository {
         }
     }
 
+    private void setPreparedStatementValuesForUpdate(PreparedStatement preparedStatement, User user) throws SQLException {
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getEmail());
+        preparedStatement.setString(3, user.getPhone());
+        preparedStatement.setString(4, user.getAddress());
+        preparedStatement.setString(5, user.getPassword());
+        preparedStatement.setInt(6, user.getId());
+    }
+
     public boolean deleteUser(User user) {
         String query = "DELETE user FROM user WHERE id = ?";
-
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -171,6 +132,6 @@ public class UserRepository {
         } catch (SQLException e) {
             throw new RuntimeException("Database operation failed", e);
         }
-
     }
 }
+
